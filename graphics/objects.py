@@ -60,16 +60,27 @@ class Label(Object):
         self.text = text
         self.w = w
         self.h = h
-        self.alignment = LEFT
+        self.alignment = CENTER  # Default alignment is left
+        self.fontSize = 50
 
     def render(self):
-        font = pygame.font.Font(None, 36)
+        font = pygame.font.Font(None, self.fontSize)
 
         text_color = BLACK
         text_surface = font.render(self.text, True, text_color)
 
         zone_rect = pygame.Rect(self.getAbsoluteX(), self.getAbsoluteY(), self.w, self.h)
-        text_rect = text_surface.get_rect(center=zone_rect.center)
+
+        if self.alignment == LEFT:
+            text_rect = text_surface.get_rect(midleft=zone_rect.midleft)
+            text_rect.x += 5  # Add a small left padding
+        elif self.alignment == CENTER:
+            text_rect = text_surface.get_rect(center=zone_rect.center)
+        elif self.alignment == RIGHT:
+            text_rect = text_surface.get_rect(midright=zone_rect.midright)
+            text_rect.x -= 5 # Add a small right padding
+        else:
+            text_rect = text_surface.get_rect(center=zone_rect.center) #Default
 
         gui.blit(text_surface, text_rect)
 
@@ -79,6 +90,7 @@ class Grid(Object):
         self.w = w
         self.h = h
         self.grid = []
+        self.gridColor = BLACK
 
     def setGrid(self, grid):
         self.grid = grid
@@ -89,27 +101,24 @@ class Grid(Object):
 
         print("a")
 
-        #try:
-        w = len(self.grid[0])
-        wf = self.w / w
+        try:
+            w = len(self.grid[0])
+            wf = self.w / w
 
-        for i in range(h):
-            for j in range(w):
-                pygame.draw.rect(gui, (0, 0, 0), (self.x + wf * j, self.y + hf * i, wf, hf), 1)
-                pygame.draw.rect(gui, (0, 0, 0), (self.x + wf * j, self.y + hf * i, wf, hf), 1)
+            for i in range(h):
+                for j in range(w):
+                    pygame.draw.rect(gui, self.gridColor, (self.x + wf * j, self.y + hf * i, wf, hf), 1)
+                    pygame.draw.rect(gui, self.gridColor, (self.x + wf * j, self.y + hf * i, wf, hf), 1)
 
-                if isinstance(self.grid[i][j], Label):
-                    self.grid[i][j].parent = self
-                    self.grid[i][j].x = wf * j
-                    self.grid[i][j].y = hf * i
-                    self.grid[i][j].w = wf
-                    self.grid[i][j].h = hf
-                    self.grid[i][j].renderAll()
-                    print("good")
-                else:
-                    print("error2", self.grid[i][j])
-        #except:
-        #    print("error")
+                    if isinstance(self.grid[i][j], Label):
+                        self.grid[i][j].parent = self
+                        self.grid[i][j].x = wf * j
+                        self.grid[i][j].y = hf * i
+                        self.grid[i][j].w = wf
+                        self.grid[i][j].h = hf
+                        self.grid[i][j].renderAll()
+        except:
+            print("Need 2 dimensions")
 
 class Win(Object):
     def __init__(self):
@@ -118,13 +127,16 @@ class Win(Object):
     def render(self):
         gui.fill((255, 255, 255))    
 
-def convertToGrid(l):
+def convertToGrid(l, forEach = None):
     if isinstance(l[0], list):
         grid = []
         for i, row in enumerate(l):
             row_labels = []
             for j, text in enumerate(row):
-                row_labels.append(Label(0, 0, 0, 0, str(text)))
+                l = Label(0, 0, 0, 0, str(text))
+                if(forEach is not None):
+                    forEach(l, i, j)
+                row_labels.append(l)
             grid.append(row_labels)
         print(grid)
         return grid
@@ -136,6 +148,8 @@ w = Win()
 g = Grid(0, 0, WIN_WIDTH/4, WIN_HEIGHT/4)
 g.setGrid(convertToGrid([[1,1,1,1,1],[1,1,1,1,1]]))
 w.add(g)
+
+g.gridColor = RED
 
 
 #l = Label(0, 0, WIN_WIDTH/4, WIN_HEIGHT/4, "Hello i am me")
