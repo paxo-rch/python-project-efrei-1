@@ -1,5 +1,6 @@
 import pygame
 import time
+import math
 pygame.init()
 
 WIN_WIDTH = 1600
@@ -63,9 +64,14 @@ class Label(Object):
 
     def render(self):
         font = pygame.font.Font(None, 36)
-        text = font.render(self.text, True, (0, 0, 0))
-        text_rect = text.get_rect(center=(self.x + self.w / 2, self.y + self.h / 2))
-        gui.blit(text, text_rect)
+
+        text_color = BLACK
+        text_surface = font.render(self.text, True, text_color)
+
+        zone_rect = pygame.Rect(self.getAbsoluteX(), self.getAbsoluteY(), self.w, self.h)
+        text_rect = text_surface.get_rect(center=zone_rect.center)
+
+        gui.blit(text_surface, text_rect)
 
 class Grid(Object):
     def __init__(self, x, y, w, h):
@@ -94,6 +100,10 @@ class Grid(Object):
 
                 if isinstance(self.grid[i][j], Label):
                     self.grid[i][j].parent = self
+                    self.grid[i][j].x = wf * j
+                    self.grid[i][j].y = hf * i
+                    self.grid[i][j].w = wf
+                    self.grid[i][j].h = hf
                     self.grid[i][j].renderAll()
                     print("good")
                 else:
@@ -108,23 +118,23 @@ class Win(Object):
     def render(self):
         gui.fill((255, 255, 255))    
 
-def convertToGrid(l, w, h):
+def convertToGrid(l):
     if isinstance(l[0], list):
         grid = []
         for i, row in enumerate(l):
             row_labels = []
             for j, text in enumerate(row):
-                row_labels.append(Label(0, 0, w, h, str(text)))
+                row_labels.append(Label(0, 0, 0, 0, str(text)))
             grid.append(row_labels)
         print(grid)
         return grid
     else:
-        return [Label(i * w, 0, w, h, str(text)) for i, text in enumerate(l)]
+        return [Label(0, 0, 0, 0, str(text)) for i, text in enumerate(l)]
 
 w = Win()
 
 g = Grid(0, 0, WIN_WIDTH/4, WIN_HEIGHT/4)
-g.setGrid(convertToGrid([[1,1,1,1,1],[1,1,1,1,1]], WIN_WIDTH/4, WIN_HEIGHT/4))
+g.setGrid(convertToGrid([[1,1,1,1,1],[1,1,1,1,1]]))
 w.add(g)
 
 
@@ -132,6 +142,7 @@ w.add(g)
 #w.add(l)
 
 running = True
+i = 0
 
 while running:
     for event in pygame.event.get():
@@ -139,6 +150,9 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+    g.w = WIN_WIDTH/4 + (WIN_WIDTH/6) * math.cos(i/20)
+    g.h = WIN_HEIGHT / 4 + (WIN_HEIGHT / 6) * math.sin(i / 20)
+    i+=1
     w.renderAll()
     pygame.display.flip()
 
