@@ -22,12 +22,21 @@ CENTER = 2
 RIGHT = 3
 
 class Object:
+    tx, ty = 0, 0
+
+    mouse = False
+    objectFocused = None
+
     def __init__(self, x, y, r):
         self.x = x
         self.y = y
         self.r = r
         self.children = []
         self.parent = None
+        self.onclick = None
+        self.onfocused = None
+        self.onstartfocused = None
+        self.onendfocused = None
 
     def add(self, o):
         self.children.append(o)
@@ -50,6 +59,31 @@ class Object:
         for child in self.children:
             child.render()
 
+    def updateAll(self):
+        for child in self.children:
+            if(child.update()):
+                return True
+        self.update()
+
+    def update(self):
+        if self.getAbsoluteX() < self.tx < self.getAbsoluteX() + self.w and self.getAbsoluteY() < self.ty < self.getAbsoluteY() + self.h:
+            if self.onfocused is not None:
+                self.onfocused()
+                if(self.onstartfocused is not None and Object.objectFocused is None):
+                    Object.objectFocused = self
+                    self.onstartfocused()
+                return True
+            if Object.mouse and self.onclick is not None:
+                self.onclick()
+                Object.mouse = False
+                print("Clicked")
+                return True
+        elif(Object.objectFocused == self):
+            if self.onendfocused is not None:
+                self.onendfocused()
+            Object.objectFocused = None
+
+
 class Box(Object):
     def __init__(self, x, y, w, h):
         super().__init__(x, y, 0)
@@ -61,13 +95,13 @@ class Label(Object):
         self.w = w
         self.h = h
         self.alignment = CENTER  # Default alignment is left
+        self.textColor = BLACK
         self.fontSize = 50
 
     def render(self):
         font = pygame.font.Font(None, self.fontSize)
 
-        text_color = BLACK
-        text_surface = font.render(self.text, True, text_color)
+        text_surface = font.render(self.text, True, self.textColor)
 
         zone_rect = pygame.Rect(self.getAbsoluteX(), self.getAbsoluteY(), self.w, self.h)
 
@@ -123,6 +157,8 @@ class Grid(Object):
 class Win(Object):
     def __init__(self):
         super().__init__(0, 0, 0)
+        self.w = WIN_WIDTH
+        self.h = WIN_HEIGHT
 
     def render(self):
         gui.fill((255, 255, 255))    
@@ -146,14 +182,15 @@ def convertToGrid(l, forEach = None):
 w = Win()
 
 g = Grid(0, 0, WIN_WIDTH/4, WIN_HEIGHT/4)
-g.setGrid(convertToGrid([[1,1,1,1,1],[1,1,1,1,1]]))
+g.setGrid(convertToGrid([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]))
+
+"""g.setGrid(convertToGrid([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]],                      # example of syntax with grids
+                       lambda label, i, j: setattr(label, 'textColor', BLUE)))"""
 w.add(g)
 
-g.gridColor = RED
-
-
-#l = Label(0, 0, WIN_WIDTH/4, WIN_HEIGHT/4, "Hello i am me")
-#w.add(l)
+g.onclick = lambda: print("You clicked the grid")
+g.onstartfocused = lambda: setattr(g, 'gridColor', RED)
+g.onendfocused = lambda: setattr(g, 'gridColor', BLACK)
 
 running = True
 i = 0
@@ -164,10 +201,18 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+        Object.tx, Object.ty = pygame.mouse.get_pos()
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                Object.mouse = True
+                print(Object.tx, Object.ty)
+
     g.w = WIN_WIDTH/4 + (WIN_WIDTH/6) * math.cos(i/20)
     g.h = WIN_HEIGHT / 4 + (WIN_HEIGHT / 6) * math.sin(i / 20)
     i+=1
     w.renderAll()
+    w.updateAll()
     pygame.display.flip()
 
     time.sleep(1/30)
