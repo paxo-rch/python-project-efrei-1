@@ -59,7 +59,25 @@ class Object:
         for child in self.children:
             child.render()
 
+        if(self.parent is None):
+            pygame.display.flip()
+            time.sleep(1 / 30)
+
     def updateAll(self):
+        if(self.parent is None):
+            self.renderAll()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+
+                Object.tx, Object.ty = pygame.mouse.get_pos()
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        Object.mouse = True
+                        print(Object.tx, Object.ty)
+
         for child in self.children:
             if(child.update()):
                 return True
@@ -69,15 +87,19 @@ class Object:
         if self.getAbsoluteX() < self.tx < self.getAbsoluteX() + self.w and self.getAbsoluteY() < self.ty < self.getAbsoluteY() + self.h:
             if self.onfocused is not None:
                 self.onfocused()
-                if(self.onstartfocused is not None and Object.objectFocused is None):
-                    Object.objectFocused = self
-                    self.onstartfocused()
+
+            if self.onstartfocused is not None and Object.objectFocused is None:
+                Object.objectFocused = self
+                self.onstartfocused()
+                print("Focused")
                 return True
+
             if Object.mouse and self.onclick is not None:
                 self.onclick()
                 Object.mouse = False
                 print("Clicked")
                 return True
+
         elif(Object.objectFocused == self):
             if self.onendfocused is not None:
                 self.onendfocused()
@@ -196,25 +218,7 @@ running = True
 i = 0
 
 while running:
-    for event in pygame.event.get():
-
-        if event.type == pygame.QUIT:
-            running = False
-
-        Object.tx, Object.ty = pygame.mouse.get_pos()
-
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 1:
-                Object.mouse = True
-                print(Object.tx, Object.ty)
-
     g.w = WIN_WIDTH/4 + (WIN_WIDTH/6) * math.cos(i/20)
     g.h = WIN_HEIGHT / 4 + (WIN_HEIGHT / 6) * math.sin(i / 20)
     i+=1
-    w.renderAll()
     w.updateAll()
-    pygame.display.flip()
-
-    time.sleep(1/30)
-
-pygame.quit()
