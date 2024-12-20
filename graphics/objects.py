@@ -29,6 +29,9 @@ class Object:
     mouse = False
     objectFocused = None
 
+    keys = []
+    Object.onkeyboard = None
+
     def __init__(self, x, y, r):
         self.x = x
         self.y = y
@@ -79,6 +82,11 @@ class Object:
                     if event.button == 1:
                         Object.mouse = True
                         print(Object.tx, Object.ty)
+
+                if event.type == pygame.KEYDOWN:
+                    if(Object.onkeyboard):
+                        Object.onkeyboard()
+                pygame.key.get_pressed()
 
         for child in self.children:
             if(child.update()):
