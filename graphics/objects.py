@@ -7,6 +7,8 @@ WIN_WIDTH = 1600
 WIN_HEIGHT = 800
 
 gui = pygame.display.set_mode([WIN_WIDTH, WIN_HEIGHT])
+clock = pygame.time.Clock()
+fps = 60
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -61,11 +63,11 @@ class Object:
 
         if(self.parent is None):
             pygame.display.flip()
-            time.sleep(1 / 30)
 
     def updateAll(self):
         if(self.parent is None):
             self.renderAll()
+            clock.tick(fps)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
