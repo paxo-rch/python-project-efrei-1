@@ -30,18 +30,25 @@ class Object:
     objectFocused = None
 
     keys = []
-    Object.onkeyboard = None
+    onkeyboard = None
 
     def __init__(self, x, y, r):
         self.x = x
         self.y = y
         self.r = r
+        self.w = 0
+        self.h = 0
+        self.radius = 0
         self.children = []
         self.parent = None
         self.onclick = None
         self.onfocused = None
         self.onstartfocused = None
         self.onendfocused = None
+
+        # image
+        self.image = None
+        self.original_image = None
 
     def add(self, o):
         self.children.append(o)
@@ -59,10 +66,36 @@ class Object:
         else:
             return self.parent.getAbsoluteY() + self.y
 
+    def loadImage(self, path):
+        try:
+            self.original_image = pygame.image.load(path).convert_alpha()  # Original image copy
+            self.rect = self.original_image.get_rect()  # Rect of original image
+        except pygame.error as e:
+            print(f"Error loading image '{path}': {e}")
+            self.original_image = None
+            self.rect = None
+
+    def privateRender(self):
+        if self.original_image and self.rect:
+            scaled_image = pygame.transform.scale(self.original_image, (self.w, self.h))
+            scaled_rect = scaled_image.get_rect()
+            scaled_rect.topleft = (self.getAbsoluteX(), self.getAbsoluteY())
+            gui.blit(scaled_image, scaled_rect)
+
+
     def renderAll(self):
-        self.render()
+        try:
+            self.renderBack()
+        except:
+            pass
+        self.privateRender()
+        try:
+            self.render()
+        except:
+            pass
+
         for child in self.children:
-            child.render()
+            child.renderAll()
 
         if(self.parent is None):
             pygame.display.flip()
@@ -83,10 +116,10 @@ class Object:
                         Object.mouse = True
                         print(Object.tx, Object.ty)
 
+                Object.keys = pygame.key.get_pressed()
                 if event.type == pygame.KEYDOWN:
                     if(Object.onkeyboard):
                         Object.onkeyboard()
-                pygame.key.get_pressed()
 
         for child in self.children:
             if(child.update()):
@@ -102,7 +135,6 @@ class Object:
                 Object.objectFocused = self
                 self.onstartfocused()
                 print("Focused")
-                return True
 
             if Object.mouse and self.onclick is not None:
                 self.onclick()
@@ -119,6 +151,16 @@ class Object:
 class Box(Object):
     def __init__(self, x, y, w, h):
         super().__init__(x, y, 0)
+        self.w = w
+        self.h = h
+        self.backgroundColor = BLUE
+        self.radius = 0
+        self.borderColor = BLACK
+        self.borderWidth = 0
+
+    def renderBack(self):
+        pygame.draw.rect(gui, self.backgroundColor, (self.x, self.y, self.w, self.h), 0, self.radius)
+        pygame.draw.rect(gui, self.borderColor, (self.x, self.y, self.w, self.h), self.borderWidth, self.radius)
 
 class Label(Object):
     def __init__(self, x, y, w, h, text):
@@ -165,8 +207,6 @@ class Grid(Object):
         h = len(self.grid)
         hf = self.h / h
 
-        print("a")
-
         try:
             w = len(self.grid[0])
             wf = self.w / w
@@ -192,7 +232,7 @@ class Win(Object):
         self.w = WIN_WIDTH
         self.h = WIN_HEIGHT
 
-    def render(self):
+    def renderBack(self):
         gui.fill((255, 255, 255))    
 
 def convertToGrid(l, forEach = None):
@@ -224,11 +264,46 @@ g.onclick = lambda: print("You clicked the grid")
 g.onstartfocused = lambda: setattr(g, 'gridColor', RED)
 g.onendfocused = lambda: setattr(g, 'gridColor', BLACK)
 
+b = Box(100, 100, 100, 100)
+b.borderWidth = 5
+b.borderColor = RED
+b.backgroundColor = GREEN
+b.radius = 40
+b.loadImage("img.png")
+
+w.add(b)
+
+
+a = Box(0, 0, 300, 80)
+a.borderWidth = 5
+a.borderColor = RED
+a.backgroundColor = GREEN
+a.radius = 40
+
+l = Label(0, 0, 300, 80, "Click here")
+l.alignment = CENTER
+
+a.add(l)
+
+w.add(a)
+
 running = True
 i = 0
 
 while running:
     g.w = WIN_WIDTH/4 + (WIN_WIDTH/6) * math.cos(i/20)
-    g.h = WIN_HEIGHT / 4 + (WIN_HEIGHT / 6) * math.sin(i / 20)
+    g.h = WIN_HEIGHT / 4 + (WIN_HEIGHT / 6) * math.sin(i/20)
     i+=1
     w.updateAll()
+
+    if(Object.keys[pygame.K_z]):
+        b.y -= 3
+
+    if(Object.keys[pygame.K_s]):
+        b.y += 3
+
+    if(Object.keys[pygame.K_q]):
+        b.x -= 3
+
+    if(Object.keys[pygame.K_d]):
+        b.x += 3
