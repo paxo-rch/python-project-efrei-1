@@ -13,7 +13,7 @@ running = True
 StartMenu = True
 Intro = False
 init_StartMenu = True
-print("test")
+print("test") 
 while running:
     if StartMenu:
         if init_StartMenu:
@@ -22,7 +22,9 @@ while running:
             text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/1.25, 20, 20, "PRESS SPACE TO PLAY")
             text.textColor = (255, 255, 255)
             w.add(text)
-            titlebox = obj.Box(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/4, 20, 20).loadImage("titrefort.png")
+            titlebox = obj.Box(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/4, 500, 400)
+            titlebox.transparent = True
+            titlebox.loadImage("titrefort.png")
             w.add(titlebox)
             obj.Object.onkeyboard = Escape
             init_StartMenu = False

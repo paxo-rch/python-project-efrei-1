@@ -53,7 +53,6 @@ class Object:
     def add(self, o):
         self.children.append(o)
         o.parent = self
-
     def getAbsoluteX(self):
         if self.parent is None:
             return self.x
@@ -157,10 +156,12 @@ class Box(Object):
         self.radius = 0
         self.borderColor = BLACK
         self.borderWidth = 0
+        self.transparent = False
 
     def renderBack(self):
-        pygame.draw.rect(gui, self.backgroundColor, (self.x, self.y, self.w, self.h), 0, self.radius)
-        pygame.draw.rect(gui, self.borderColor, (self.x, self.y, self.w, self.h), self.borderWidth, self.radius)
+        if not self.transparent:
+            pygame.draw.rect(gui, self.backgroundColor, (self.x, self.y, self.w, self.h), 0, self.radius)
+            pygame.draw.rect(gui, self.borderColor, (self.x, self.y, self.w, self.h), self.borderWidth, self.radius)
 
 class Label(Object):
     def __init__(self, x, y, w, h, text):
