@@ -3,8 +3,8 @@ import time
 import math
 pygame.init()
 
-WIN_WIDTH = 1600
-WIN_HEIGHT = 800
+WIN_WIDTH = 1280
+WIN_HEIGHT = 720
 
 gui = pygame.display.set_mode([WIN_WIDTH, WIN_HEIGHT])
 clock = pygame.time.Clock()
@@ -29,7 +29,7 @@ class Object:
     mouse = False
     objectFocused = None
 
-    keys = []
+    keys = pygame.key.get_pressed()
     onkeyboard = None
 
     def __init__(self, x, y, r):
@@ -231,10 +231,12 @@ class Win(Object):
         super().__init__(0, 0, 0)
         self.w = WIN_WIDTH
         self.h = WIN_HEIGHT
+        self.hide_bg = False
 
     def renderBack(self):
-        gui.fill((255, 255, 255))    
-
+        if not self.hide_bg:
+            gui.fill((255, 255, 255))    
+        pass
 def convertToGrid(l, forEach = None):
     if isinstance(l[0], list):
         grid = []
@@ -251,59 +253,3 @@ def convertToGrid(l, forEach = None):
     else:
         return [Label(0, 0, 0, 0, str(text)) for i, text in enumerate(l)]
 
-w = Win()
-
-g = Grid(0, 0, WIN_WIDTH/4, WIN_HEIGHT/4)
-g.setGrid(convertToGrid([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]))
-
-"""g.setGrid(convertToGrid([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]],                      # example of syntax with grids
-                       lambda label, i, j: setattr(label, 'textColor', BLUE)))"""
-w.add(g)
-
-g.onclick = lambda: print("You clicked the grid")
-g.onstartfocused = lambda: setattr(g, 'gridColor', RED)
-g.onendfocused = lambda: setattr(g, 'gridColor', BLACK)
-
-b = Box(100, 100, 100, 100)
-b.borderWidth = 5
-b.borderColor = RED
-b.backgroundColor = GREEN
-b.radius = 40
-b.loadImage("img.png")
-
-w.add(b)
-
-
-a = Box(0, 0, 300, 80)
-a.borderWidth = 5
-a.borderColor = RED
-a.backgroundColor = GREEN
-a.radius = 40
-
-l = Label(0, 0, 300, 80, "Click here")
-l.alignment = CENTER
-
-a.add(l)
-
-w.add(a)
-
-running = True
-i = 0
-
-while running:
-    g.w = WIN_WIDTH/4 + (WIN_WIDTH/6) * math.cos(i/20)
-    g.h = WIN_HEIGHT / 4 + (WIN_HEIGHT / 6) * math.sin(i/20)
-    i+=1
-    w.updateAll()
-
-    if(Object.keys[pygame.K_z]):
-        b.y -= 3
-
-    if(Object.keys[pygame.K_s]):
-        b.y += 3
-
-    if(Object.keys[pygame.K_q]):
-        b.x -= 3
-
-    if(Object.keys[pygame.K_d]):
-        b.x += 3
