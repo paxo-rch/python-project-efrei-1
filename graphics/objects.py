@@ -74,6 +74,9 @@ class Object:
             self.original_image = None
             self.rect = None
 
+    def destroy(self,o):
+        self.children.remove(o)
+
     def privateRender(self):
         if self.original_image and self.rect:
             scaled_image = pygame.transform.scale(self.original_image, (self.w, self.h))
