@@ -14,7 +14,6 @@ def Escape():
             nuage.loadImage("nuagenobg.png")
             w.add(nuage)
             nuages.append(nuage)
-        for i in range(4):
             nuage = obj.Box(obj.WIN_WIDTH, -500+i*200, 1700, 1000)
             nuage.transparent = True
             nuage.loadImage("nuagenobg.png")
@@ -27,15 +26,17 @@ def Escape():
                 i.x -= 10
             video.draw_to(obj.gui, (0, 0))
             w.updateAll()
+        w.hide_bg = False
         video.stop()
+        video.release()
         w.destroy(titlebox)
+        w.destroy(text)
         for j in range(115):
             for i in nuages:
                 i.x -= 10
             for i in nuages1:
                 i.x += 10
             w.updateAll()
-        w.hide_bg = False
         StartMenu = False
         Intro = True
 w = obj.Win()
@@ -50,6 +51,7 @@ while running:
         if init_StartMenu:
             video = Video("genrique.mp4")
             video.play(True)
+            w.hide_bg = True
             text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/1.25, 20, 20, "PRESS SPACE TO PLAY")
             text.textColor = (255, 255, 255)
             w.add(text)
@@ -59,8 +61,7 @@ while running:
             w.add(titlebox)
             obj.Object.onkeyboard = Escape
             init_StartMenu = False
-        utility_functions.StartMenu(w,video,text)
+        utility_functions.StartMenu(video,text)
     else:
         pass
-    print(StartMenu)
     w.updateAll()

@@ -2,19 +2,13 @@ import graphics.objects as obj
 import pygame
 import time
 from pygamevideo import Video
-def StartMenuEscape():
-    if pygame.key.get_pressed()[pygame.K_SPACE]:
-        StartMenu = False
-        Intro = True
-def StartMenu(w,video,text):
-        w.hide_bg = True
+
+def StartMenu(video,text):
         video.draw_to(obj.gui, (0, 0))
         if time.time() % 1 > 0.5:
             text.text = "PRESS SPACE TO PLAY"
-            Blink_Play_Btn = False
         else:
             text.text = ""
-            Blink_Play_Btn = True
 def Introduction():
     w = obj.Win()
     pygame.display.set_caption('Fort Boyard Client v1.0')
@@ -28,4 +22,3 @@ def Introduction():
     video.play(True)
     Start_Menu = True
     intro = False
-    obj.Object.onkeyboard = StartMenuEscape
