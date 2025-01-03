@@ -6,9 +6,9 @@ from pygamevideo import Video
 def StartMenu(video,text):
         video.draw_to(obj.gui, (0, 0))
         if time.time() % 1 > 0.5:
-            text.text = "PRESS SPACE TO PLAY"
+            text.loadImage("parchemin_menu.png")
         else:
-            text.text = ""
+            text.unloadImage()
 def Introduction():
     w = obj.Win()
     pygame.display.set_caption('Fort Boyard Client v1.0')

@@ -22,8 +22,9 @@ while running:
             video = Video("genrique.mp4")
             video.play(True)
             w.hide_bg = True
-            text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/1.25, 20, 20, "PRESS SPACE TO PLAY")
-            text.textColor = (255, 255, 255)
+            text = obj.Box(obj.WIN_WIDTH/3.4, obj.WIN_HEIGHT/1.5, 600, 200)
+            text.transparent = True
+            text.loadImage("parchemin_menu.png")
             w.add(text)
             titlebox = obj.Box(obj.WIN_WIDTH/3, obj.WIN_HEIGHT/10, 500, 400)
             titlebox.transparent = True
@@ -38,6 +39,12 @@ while running:
             nuages1 = []
             sky_box = obj.Box(0, 0, obj.WIN_WIDTH, obj.WIN_HEIGHT)
             sky_box.transparent = True
+            button_skip = obj.Box(obj.WIN_WIDTH/1.3, obj.WIN_HEIGHT/1.25, 200, 100)
+            button_skip.borderWidth = 5
+            button_skip.radius = 10
+            button_skip.hide_bg = True
+            button_skip.transparent = True
+            w.add(button_skip)
             w.add(sky_box)
             for i in range(4):
                 nuage = obj.Box(-1700, -500+i*200, 1700, 1000)
@@ -58,13 +65,11 @@ while running:
                 video.draw_to(obj.gui, (0, 0))
                 w.updateAll()
             w.hide_bg = False
-            video.stop()
-            video.release()
+
             w.destroy(titlebox)
             w.destroy(text)
             w.loadImage("parchemin.jpg")
-            button_skip = obj.Box(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/1.25, 100, 50)
-            w.add(button_skip)
+            button_skip.transparent = False
             for j in range(115):
                 for i in nuages:
                     i.x -= 10

@@ -118,7 +118,6 @@ class Object:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         Object.mouse = True
-                        print(Object.tx, Object.ty)
 
                 Object.keys = pygame.key.get_pressed()
                 if event.type == pygame.KEYDOWN:
@@ -162,10 +161,11 @@ class Box(Object):
         self.borderColor = BLACK
         self.borderWidth = 0
         self.transparent = False
-
+        self.hide_bg = False
     def renderBack(self):
         if not self.transparent:
-            pygame.draw.rect(gui, self.backgroundColor, (self.x, self.y, self.w, self.h), 0, self.radius)
+            if not self.hide_bg:
+                pygame.draw.rect(gui, self.backgroundColor, (self.x, self.y, self.w, self.h), 0, self.radius)
             pygame.draw.rect(gui, self.borderColor, (self.x, self.y, self.w, self.h), self.borderWidth, self.radius)
 
 class Label(Object):
