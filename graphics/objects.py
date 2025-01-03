@@ -197,6 +197,23 @@ class Label(Object):
             text_rect = text_surface.get_rect(center=zone_rect.center) #Default
 
         gui.blit(text_surface, text_rect)
+class Input(Object):
+    def __init__(self, x, y, w, h):
+        super().__init__(x, y, 0)
+        self.w = w
+        self.h = h
+        self.backgroundColor = BLUE
+        self.borderColor = BLACK
+        self.borderWidth = 5
+        self.radius = 10
+        self.transparent = False
+        self.hide_bg = True
+        self.text = ""
+    def renderBack(self):
+        if not self.transparent:
+            if not self.hide_bg:
+                pygame.draw.rect(gui, self.backgroundColor, (self.x, self.y, self.w, self.h), 0, self.radius)
+            pygame.draw.rect(gui, self.borderColor, (self.x, self.y, self.w, self.h), self.borderWidth, self.radius)
 
 class Grid(Object):
     def __init__(self, x, y, w, h):
