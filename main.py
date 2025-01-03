@@ -3,48 +3,79 @@ import pygame
 import utility_functions
 import time
 from pygamevideo import Video
+"""
+Create and move the clouds forward
+"""
 def nuage_forward():
+    #allows the clouds to be accessed by the backward function
     global nuages,nuages1,sky_box
+    #initialize the list containing the cloud objects (nuages for the left and nuages1 for the right)
     nuages = []
     nuages1 = []
+    #create a box to contain the clouds
     sky_box = obj.Box(0, 0, obj.WIN_WIDTH, obj.WIN_HEIGHT)
     sky_box.hide = True
     w.add(sky_box)
+    #loop that creates 4 clouds on each sides
     for i in range(4):
+        #create a box containing a cloud on the left
         nuage = obj.Box(-1700, -500+i*200, 1700, 1000)
+        #hiding the box
         nuage.hide = True
+        #loading the cloud image
         nuage.loadImage("nuagenobg1.png")
+        #adding the cloud to the main box
         sky_box.add(nuage)
         nuages.append(nuage)
+        #create a box containing a cloud on the left
         nuage = obj.Box(obj.WIN_WIDTH, -500+i*200, 1700, 1000)
+        #hiding the box
         nuage.hide = True
+        #loading the cloud image
         nuage.loadImage("nuagenobg1.png")
+        #adding the cloud to the main box
         sky_box.add(nuage)
         nuages1.append(nuage)
+    #adjust the speed of the clouds
     rate = 0.75
+    #loop that makes the clouds move forward
     for j in range(round(115*rate)):
+        #move the clouds on the left
         for i in nuages:
             i.x += 10/rate
+        #move the clouds on the right
         for i in nuages1:
             i.x -= 10/rate
         video.draw_to(obj.gui, (0, 0))
         w.updateAll()
+"""
+Function that moves the clouds backward
+"""
 def nuage_backward():
+    #adjust the speed of the clouds
     rate = 0.75
+    #loop that makes the clouds move backward
     for j in range(round(115*rate)):
+        #move the clouds on the left
         for i in nuages:
             i.x -= 10/rate
+        #move the clouds on the right
         for i in nuages1:
             i.x += 10/rate
         w.updateAll()
     w.destroy(sky_box)
-
+"""
+Listener for all keyboard events
+"""
 def KeyboardListener():
     global StartMenu, Intro, init_Intro
     if pygame.key.get_pressed()[pygame.K_SPACE] and StartMenu:
         StartMenu = False
         init_Intro = True
         Intro = True
+"""
+Listener for events related to the skip button and continue button
+"""
 def button_skip_listener():
     global Intro_Skiped, Player_Selection, Intro,init_Player_Selection
     if skip_text.text == "Passer":
@@ -53,9 +84,15 @@ def button_skip_listener():
         Intro = False
         Player_Selection = True
         init_Player_Selection = True
-        
+
+#create the main window
 w = obj.Win()
+#set the window name
 pygame.display.set_caption('Fort Boyard Client v1.0')
+#set the window icon
+programIcon = pygame.image.load('titrefort.png')
+pygame.display.set_icon(programIcon)
+#initialize game state variables
 running = True
 StartMenu = True
 Intro = False
@@ -64,22 +101,36 @@ Player_Selection = False
 init_StartMenu = True
 init_Intro = False
 init_Player_Selection = False
+#main game loop
 while running:
+    #Start menu
     if StartMenu:
+        #initialize the start menu once
         if init_StartMenu:
+            #load the background video
             video = Video("genrique.mp4")
             video.play(True)
+            #hide the main window background
             w.hide_bg = True
+            #create a box for the image the PRESS SPACE TO PLAY
             text = obj.Box(obj.WIN_WIDTH/3.4, obj.WIN_HEIGHT/1.5, 600, 200)
+            #hide the box
             text.hide = True
+            #load the image	
             text.loadImage("parchemin_menu.png")
+            #add the PRESS SPACE TO PLAY box to the window
             w.add(text)
+            #create a box for the title
             titlebox = obj.Box(obj.WIN_WIDTH/3, obj.WIN_HEIGHT/10, 500, 400)
+            #hide the box
             titlebox.hide = True
+            #load the image
             titlebox.loadImage("titrefort.png")
             w.add(titlebox)
+            #set the keyboard listener
             obj.Object.onkeyboard = KeyboardListener
             init_StartMenu = False
+        #function to flicker the PRESS SPACE TO PLAY image
         utility_functions.StartMenu(video,text)
     elif Intro:
         if init_Intro:
