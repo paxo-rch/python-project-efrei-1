@@ -160,10 +160,10 @@ class Box(Object):
         self.radius = 0
         self.borderColor = BLACK
         self.borderWidth = 0
-        self.transparent = False
+        self.hide = False
         self.hide_bg = False
     def renderBack(self):
-        if not self.transparent:
+        if not self.hide:
             if not self.hide_bg:
                 pygame.draw.rect(gui, self.backgroundColor, (self.x, self.y, self.w, self.h), 0, self.radius)
             pygame.draw.rect(gui, self.borderColor, (self.x, self.y, self.w, self.h), self.borderWidth, self.radius)
@@ -177,6 +177,7 @@ class Label(Object):
         self.alignment = CENTER  # Default alignment is left
         self.textColor = BLACK
         self.fontSize = 50
+        self.hide = False
 
     def render(self):
         font = pygame.font.Font(None, self.fontSize)
@@ -195,8 +196,8 @@ class Label(Object):
             text_rect.x -= 5 # Add a small right padding
         else:
             text_rect = text_surface.get_rect(center=zone_rect.center) #Default
-
-        gui.blit(text_surface, text_rect)
+        if not self.hide:
+            gui.blit(text_surface, text_rect)
 class Input(Object):
     def __init__(self, x, y, w, h):
         super().__init__(x, y, 0)
