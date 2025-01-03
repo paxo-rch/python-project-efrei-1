@@ -73,7 +73,9 @@ class Object:
             print(f"Error loading image '{path}': {e}")
             self.original_image = None
             self.rect = None
-
+    def unloadImage(self):
+        self.original_image = None
+        self.rect = None
     def destroy(self,o):
         self.children.remove(o)
 
