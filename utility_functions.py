@@ -316,7 +316,7 @@ def ChallengeMenu():
     chance_button.radius = 10
     chance_button.hide_bg = True
     w.add(chance_button)
-    chance_texte = obj.Label(obj.WIN_WIDTH/1.95, obj.WIN_HEIGHT/1.35, 0, 0, "Luck")
+    chance_texte = obj.Label(obj.WIN_WIDTH/1.95, obj.WIN_HEIGHT/1.35, 0, 0, "Gambling")
     w.add(chance_texte)
     perefourras_button = obj.Box(obj.WIN_WIDTH/2.3, obj.WIN_HEIGHT/1.2, 200, 100)
     perefourras_button.borderWidth = 5    
