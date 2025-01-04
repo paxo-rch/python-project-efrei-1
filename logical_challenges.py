@@ -36,6 +36,7 @@ def nim_game():
             n -= master_removal(n)
         who = not who
 
+
     if(who):
         print("The game master removed the last stick. The player wins!")
     else:
@@ -187,20 +188,119 @@ def tictactoe_game():
         print("Draw!")
         return False
 
-# Battleship    # TODO if we have more time
+############# With interface version
 
-def next_player(player):
-    return (player + 1) % 2
+from graphics.objects import *
+import math
+from time import *
+import points
 
-def empty_grid():
-    return [[" " for j in range(3)] for i in range(3)]
+# We will only do the nim game here
 
-def display_grid(grid):
-    for i in grid:
-        print("", end="| ")
-        for r,j in enumerate(i):
-            print(j, end=" | ")
-        print()    
-    print("-" * 13)
+def display_sticks(n):
+    print("Remaining sticks: " + "|" * n)
 
-display_grid(empty_grid())
+def player_removal(n):
+    print("Player's turn.")
+    interval = [1, 2, 3]
+
+    i = 0
+    while i not in interval:
+        i = int(input(f"How many sticks do you want to remove {interval}: "))
+        
+        if i in interval:
+            return i
+    
+def master_removal(n):
+    interval = [1, 2, 3]
+
+    rm = ((n-1)%4)
+    if(rm == 0):
+        rm = 1
+
+    print("The master removed " + str(rm) + " stick(s).")
+
+    return rm
+
+def nim_game():
+    n = 20
+    who = True
+
+    win = Win()
+    win.loadImage("parchemin.jpg")
+    win.add(Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "Nim game"))
+
+    text = Label(WIN_WIDTH/2, WIN_HEIGHT/3, 20, 20, "The goal is to not remove the last stick. You can remove 1, 2 or 3 sticks.")
+    text.alignment = CENTER
+    win.add(text)
+
+    sticks = []
+
+    for i in range(n):
+        stick = Box(WIN_WIDTH/2 - 40 * n / 2 + i*40, WIN_HEIGHT/2, 20, 100)
+        stick.loadImage("stick.png")
+        stick.transparent = True
+        win.add(stick)
+        sticks.append(stick)
+
+    btn_1 = Label(WIN_WIDTH/2 - 90, WIN_HEIGHT - 120, 60, 100, "1")
+    btn_1.alignment = CENTER
+    btn_1.loadImage("small_paper.png")
+    win.add(btn_1)
+
+    btn_2 = Label(WIN_WIDTH/2 - 10, WIN_HEIGHT - 120, 60, 100, "2")
+    btn_2.alignment = CENTER
+    btn_2.loadImage("small_paper.png")
+    win.add(btn_2)
+
+    btn_3 = Label(WIN_WIDTH/2 + 70, WIN_HEIGHT - 120, 60, 100, "3")
+    btn_3.alignment = CENTER
+    btn_3.loadImage("small_paper.png")
+    win.add(btn_3)
+
+    def move_stick(nb, who):
+        sticks_to_move = sticks[n-nb:n]
+
+        for i in range(30):
+            for stick in sticks_to_move:
+                if(who):
+                    stick.y += 2
+                else:
+                    stick.y -= 2
+            win.updateAll()
+
+    while n > 0:
+        if(who):
+            torm = 0
+
+            def button_listener(t):
+                def handler():
+                    nonlocal torm
+                    torm = t
+                return handler
+
+            btn_1.onclick = button_listener(1)
+            btn_2.onclick = button_listener(2)
+            btn_3.onclick = button_listener(3)
+
+            while torm == 0:
+                win.updateAll()
+
+            print("Player's turn.", torm, "stick(s) removed")
+            move_stick(torm, who)
+            n -= torm
+        else:
+            torm = master_removal(n)
+            move_stick(torm, who)
+            n -= torm
+        who = not who
+
+
+    if(who):
+        print("The game master removed the last stick. The player wins!")
+    else:
+        print("The player removed the last stick. The game master wins!")
+
+    return who  # True if player wins
+
+nim_game()

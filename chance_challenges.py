@@ -220,12 +220,12 @@ def roll_dice_game():
         if(whoid == 1):
             sleep(2)
 
-        if(whoid == 0 and r == 6):
-            who.text = "The " + name[whoid] + " wins!"
+        if(whoid == 1 and r == 6):
+            who.text = "The " + name[1-whoid] + " wins!"
             for i in range(30):
                 win.updateAll()
             return True
-        elif(whoid == 1 and r == 6):
+        elif(whoid == 0 and r == 6):
             return False
         
 def chance_challenge():
