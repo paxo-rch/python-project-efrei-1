@@ -390,6 +390,7 @@ def nim_game():
 
 
     if(who):
+        points.register_points("logical_challenge", 1)
         print("The game master removed the last stick. The player wins!")
     else:
         print("The player removed the last stick. The game master wins!")

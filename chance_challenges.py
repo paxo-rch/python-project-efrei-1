@@ -311,7 +311,6 @@ def chance_challenge(player):
     exit.loadImage("small_paper.png")
     exit.hide = True
     win.add(exit)
-    
     nuage_backward(win)
 
     loop1 = True
