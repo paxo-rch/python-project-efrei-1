@@ -45,7 +45,7 @@ class Object:
         self.onfocused = None
         self.onstartfocused = None
         self.onendfocused = None
-
+        self.hide = False
         # image
         self.image = None
         self.original_image = None
@@ -88,6 +88,8 @@ class Object:
 
 
     def renderAll(self):
+        if self.hide:
+            return
         try:
             self.renderBack()
         except:
@@ -105,6 +107,8 @@ class Object:
             pygame.display.flip()
 
     def updateAll(self):
+        if self.hide:
+            return False
         if(self.parent is None):
             self.renderAll()
             clock.tick(fps)
