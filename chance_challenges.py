@@ -280,7 +280,7 @@ def roll_dice_game():
         elif(whoid == 0 and r == 6):
             return False
 
-def chance_challenge():
+def chance_challenge(player):
     # Presents a graphical interface for selecting and playing a random mini-game.
     # Parameters: None
     # Returns: None. This function manages the game flow and doesn't directly return a meaningful value.
@@ -311,59 +311,47 @@ def chance_challenge():
     exit.loadImage("small_paper.png")
     exit.hide = True
     win.add(exit)
-
-    replay = Label(WIN_WIDTH*5/8, WIN_HEIGHT/2, WIN_WIDTH/4, WIN_WIDTH/8, "Play again")
-    replay.alignment = CENTER
-    replay.loadImage("small_paper.png")
-    replay.hide = True
-    win.add(replay)
     
     nuage_backward(win)
 
     loop1 = True
     def global_exit():
-        # Sets flags to exit both loops.
-        nonlocal loop1, loop2
-        if loop1:
-            loop1 = False
-            loop2 = False
-            nuage_forward(win)
+            nonlocal loop1
+            # Sets flags to exit both loops.
+            if loop1:
+                loop1 = False
+                nuage_forward(win)
+            
+            
     exit.onclick = global_exit
 
-    # Main game loop.
-    while loop1:
-        loop2 = True
-        def set_loop_false():
-            # Sets a flag to exit the inner loop.
-            nonlocal loop2
-            loop2 = False
-        button.onclick = set_loop_false
-        replay.onclick = set_loop_false
-
-        # Wait for player input.
-        while loop2:
-            win.updateAll()
-        
-        if(loop1 == False):
-            break
-
+    def btn_click():
+        global result
         # Select and play a random challenge.
+        win.destroy(button)
         functions = [shell_game,roll_dice_game]
         challenge =  random.choice(functions)
-        result = challenge()
-
         # Show appropriate messages and buttons based on the game result.
         title.hide = True
         button.hide = True
         exit.hide = False
-        replay.hide = False
-
+        result = challenge()
         if(result):
-            points.register_points("chance_challenge", 1)
             title2.hide = False
             title3.hide = True
             button.hide = True
         else:
             title2.hide = True
             title3.hide = False
+
+    button.onclick = btn_click
+
+
+    while True:
+        if not loop1:
+            if result:
+                return player
+            else:
+                return 0
+        win.updateAll()
 

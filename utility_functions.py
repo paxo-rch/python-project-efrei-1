@@ -111,7 +111,7 @@ def Introduction():
 
 
 def PlayerCount():
-
+    global counter
     w = obj.Win()
     w.hide_bg = False
     w.loadImage("parchemin.jpg")
@@ -150,16 +150,16 @@ def PlayerCount():
     nuage_backward(w)
 
     def CounterListenerPlus():
-
-        nonlocal counter, number_text
+        global counter
+        nonlocal number_text
         if counter < 3:
 
             counter += 1
             number_text.text = str(counter)
 
     def CounterListenerMinus():
-
-        nonlocal counter, number_text
+        global counter
+        nonlocal number_text
         if counter > 1:
 
             counter -= 1
@@ -183,6 +183,7 @@ def PlayerCount():
         w.updateAll()
 
 def Compose_Equipe(nbr):
+    global players
     nbr_joueurs = nbr+1
     players = []
     w = obj.Win()
@@ -266,7 +267,7 @@ def Compose_Equipe(nbr):
     def button_listener():
         nonlocal nbr, leader
         nbr -= 1
-        players.append({"name":name_text.text,"profession":profession_text.text,"leader":leader})
+        players.append({"name":name_text.text,"profession":profession_text.text,"leader":leader,"key":0})
         if nbr > 0:
             name_text.text = ""
             profession_text.text = ""
@@ -334,7 +335,82 @@ def ChallengeMenu():
         if animation:
             animation = False
             nuage_forward(w)
-            chance_challenges.chance_challenge()
+            PlayerChoice("luck")
     chance_button.onclick = challenge_listener
+    while True:
+        w.updateAll()
+def PlayerChoice(game):
+
+    w = obj.Win()
+    w.hide_bg = False
+    w.loadImage("parchemin.jpg")
+    button_continuer = obj.Box(obj.WIN_WIDTH/1.3, obj.WIN_HEIGHT/1.25, 200, 100)
+    button_continuer.borderWidth = 5
+    button_continuer.radius = 10
+    button_continuer.hide_bg = True
+    continuer_text = obj.Label(0, 0, 200, 100, "Continuer")
+    button_continuer.add(continuer_text)
+    w.add(button_continuer)
+    count_text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Choisissez le joueur")
+    count = 1
+    counter_box = obj.Box(obj.WIN_WIDTH/3, obj.WIN_HEIGHT/2, 400, 200)
+    counter_box.hide_bg = True
+    counter_box.borderWidth = 5
+    counter_box.radius = 10
+    w.add(counter_box)
+    number_text = obj.Label(counter_box.x+counter_box.w/2, counter_box.y+counter_box.h/2, 0, 0, "1")
+    w.add(number_text)
+    plus_box = obj.Box(counter_box.x+counter_box.w/1.5, counter_box.y+counter_box.h/3.25, 100, 100)
+    plus_box.hide_bg = True
+    plus_box.borderWidth = 5
+    plus_box.radius = 10
+    w.add(plus_box)
+    plus_text = obj.Label(counter_box.x+counter_box.w/1.25, counter_box.y+counter_box.h/1.75, 0, 0, "+")
+    w.add(plus_text)
+    minus_box = obj.Box(counter_box.x+counter_box.w/8, counter_box.y+counter_box.h/3.25, 100, 100)
+    minus_box.hide_bg = True
+    minus_box.borderWidth = 5
+    minus_box.radius = 10
+    w.add(minus_box)
+    minus_text = obj.Label(counter_box.x+counter_box.w/4, counter_box.y+counter_box.h/1.75, 0, 0, "-")
+    w.add(minus_text)
+    w.add(count_text)
+
+    nuage_backward(w)
+
+    def CounterListenerPlus():
+
+        nonlocal count, number_text
+        if count < counter:
+
+            count += 1
+            number_text.text = str(count)
+
+    def CounterListenerMinus():
+
+        nonlocal count, number_text
+        if count > 1:
+
+            count -= 1
+            number_text.text = str(count)
+
+    def button_listener():
+
+        nonlocal continuer
+        if continuer:
+
+            continuer = False
+            nuage_forward(w)
+            if game == "luck":
+                key_player = chance_challenges.chance_challenge(counter)
+                if key_player != 0:
+                    players[key_player-1]["key"] += 1
+                print(players)
+                ChallengeMenu()
+
+    continuer = True
+    plus_box.onclick = CounterListenerPlus
+    minus_box.onclick = CounterListenerMinus
+    button_continuer.onclick = button_listener
     while True:
         w.updateAll()
