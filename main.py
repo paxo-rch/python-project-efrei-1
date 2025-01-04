@@ -3,98 +3,7 @@ import pygame
 import utility_functions
 import time
 from pygamevideo import Video
-"""
-Create and move the clouds forward
-"""
-def nuage_forward():
-    #allows the clouds to be accessed by the backward function
-    global nuages,nuages1,sky_box
-    #initialize the list containing the cloud objects (nuages for the left and nuages1 for the right)
-    nuages = []
-    nuages1 = []
-    #create a box to contain the clouds
-    sky_box = obj.Box(0, 0, obj.WIN_WIDTH, obj.WIN_HEIGHT)
-    sky_box.transparent = True
-    w.add(sky_box)
-    #loop that creates 4 clouds on each sides
-    for i in range(4):
-        #create a box containing a cloud on the left
-        nuage = obj.Box(-1700, -500+i*200, 1700, 1000)
-        #hiding the box
-        nuage.transparent = True
-        #loading the cloud image
-        nuage.loadImage("nuagenobg1.png")
-        #adding the cloud to the main box
-        sky_box.add(nuage)
-        nuages.append(nuage)
-        #create a box containing a cloud on the left
-        nuage = obj.Box(obj.WIN_WIDTH, -500+i*200, 1700, 1000)
-        #hiding the box
-        nuage.transparent = True
-        #loading the cloud image
-        nuage.loadImage("nuagenobg1.png")
-        #adding the cloud to the main box
-        sky_box.add(nuage)
-        nuages1.append(nuage)
-    #adjust the speed of the clouds
-    rate = 0.75
-    #loop that makes the clouds move forward
-    for j in range(round(115*rate)):
-        #move the clouds on the left
-        for i in nuages:
-            i.x += 10/rate
-        #move the clouds on the right
-        for i in nuages1:
-            i.x -= 10/rate
-        video.draw_to(obj.gui, (0, 0))
-        w.updateAll()
-"""
-Function that moves the clouds backward
-"""
-def nuage_backward():
-    #adjust the speed of the clouds
-    rate = 0.75
-    #loop that makes the clouds move backward
-    for j in range(round(115*rate)):
-        #move the clouds on the left
-        for i in nuages:
-            i.x -= 10/rate
-        #move the clouds on the right
-        for i in nuages1:
-            i.x += 10/rate
-        w.updateAll()
-    w.destroy(sky_box)
-"""
-Listener for all keyboard events
-"""
-def KeyboardListener():
-    global StartMenu, Intro, init_Intro
-    if pygame.key.get_pressed()[pygame.K_SPACE] and StartMenu:
-        StartMenu = False
-        init_Intro = True
-        Intro = True
-"""
-Listener for events related to the skip button and continue button
-"""
-def button_skip_listener():
-    global Intro_Skiped, Player_Selection, Intro,init_Player_Selection
-    if skip_text.text == "Passer":
-        Intro_Skiped = True
-    else:
-        Intro = False
-        Player_Selection = True
-        init_Player_Selection = True
-def CounterListenerPlus():
-    global counter, number_text
-    counter += 1
-    number_text.text = str(counter)
-def CounterListenerMinus():
-    global counter, number_text
-    if counter > 1:
-        counter -= 1
-        number_text.text = str(counter)
-#create the main window
-w = obj.Win()
+    
 #set the window name
 pygame.display.set_caption('Fort Boyard Client v1.0')
 #set the window icon
@@ -105,10 +14,12 @@ running = True
 StartMenu = True
 Intro = False
 Player_Selection = False
+Player_Name = False
 
 init_StartMenu = True
 init_Intro = False
 init_Player_Selection = False
+init_Player_Name = False
 #main game loop
 while running:
     #Start menu
@@ -157,7 +68,7 @@ while running:
             w.destroy(text)
             w.loadImage("parchemin.jpg")
             button_skip.transparent = False
-            button_skip.onclick = button_skip_listener
+            button_skip.onclick = button_listener
             nuage_backward()
             text_intro = "Bienvenue à vous jeunes aventuriers\nVous recherchez la gloire, le pouvoir et la richesse ?\nVous êtes au bon endroit.\nIci vous pourrez obtenir tous ce que vous désirez,\nmais pour cela il faudra réussir les épreuves choisis par le maitre du jeu\nBonne chance!"
             label_intro = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/2, 15, 15,"")
@@ -173,6 +84,14 @@ while running:
             init_Intro = False
     elif Player_Selection:
         if init_Player_Selection:
+            button_continuer = obj.Box(obj.WIN_WIDTH/1.3, obj.WIN_HEIGHT/1.25, 200, 100)
+            button_continuer.borderWidth = 5
+            button_continuer.radius = 10
+            button_continuer.hide_bg = True
+            button_continuer.transparent = True
+            continuer_text = obj.Label(0, 0, 200, 100, "Continuer")
+            button_continuer.add(continuer_text)
+            w.add(button_continuer)
             count_text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Choisissez le nombre de joueurs")
             count_text.transparent = True
             counter = 0
@@ -214,8 +133,42 @@ while running:
             minus_text.transparent = False
             number_text.transparent = False
             counter_box.transparent = False
+            button_continuer.transparent = False
             plus_box.onclick = CounterListenerPlus
             minus_box.onclick = CounterListenerMinus
+            button_continuer.onclick = button_listener
             nuage_backward()
             init_Player_Selection = False
+    elif Player_Name:
+        if init_Player_Name:
+            button_continuer = obj.Box(obj.WIN_WIDTH/1.3, obj.WIN_HEIGHT/1.25, 200, 100)
+            button_continuer.borderWidth = 5
+            button_continuer.radius = 10
+            button_continuer.hide_bg = True
+            button_continuer.transparent = True
+            continuer_text = obj.Label(0, 0, 200, 100, "Continuer")
+            button_continuer.add(continuer_text)
+            button_continuer.onclick = button_listener
+            w.add(button_continuer)
+            input_box = obj.Box(obj.WIN_WIDTH/1.3, obj.WIN_HEIGHT/1.25, 200, 100)
+            input_box.borderWidth = 5
+            input_box.radius = 10
+            input_box.hide_bg = True
+            input_box.transparent = True
+            input_text = obj.Label(0, 0, 200, 100, "Continuer")
+            input_box.add(input_text)
+            w.add(input_box)
+            nuage_forward()
+            w.destroy(count_text)
+            w.destroy(plus_box)
+            w.destroy(minus_box)
+            w.destroy(plus_text)
+            w.destroy(minus_text)
+            w.destroy(number_text)
+            w.destroy(counter_box)
+            input_box.transparent = False
+            input_text.transparent = False
+            button_continuer.transparent = False
+            nuage_backward()
+            init_Player_Name = False
     w.updateAll()
