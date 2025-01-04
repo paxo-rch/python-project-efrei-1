@@ -52,31 +52,107 @@ def chance_challenge():
 ############# With interface version
 
 from graphics.objects import *
+import math
+from time import *
 import points
 
 def shell_game():
-    shell = ['A','B','C']
-    attempt = 0
-    
-    slected_player = ""
+    win = Win()
+    win.loadImage("parchemin.jpg")
+
+    title = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "Welcome to the shell game\nYou will have to guess the correct shell in which the coin is hidden\nYou have 2 attempts\n Good Luck!")
+    title.alignment = CENTER
+    win.add(title)
+
+    coin = Box(WIN_WIDTH/4 + 200 + 200/2-66/2, WIN_HEIGHT/2+200, 66, 66)
+    coin.radius = 33
+    coin.backgroundColor = YELLOW
+    win.add(coin)
+
+    cups = []
+    cups_pos_goal = []
+
+    for i in range(3):
+        cup = Box(WIN_WIDTH/4 + 200*i, WIN_HEIGHT/2, 200, 200)
+        cups_pos_goal.append([[cup.x,cup.y],[cup.x,cup.y],0])
+        cup.loadImage("cup.png")
+        cup.transparent = True
+        win.add(cup)
+        cups.append(cup)
+
     print("Welcome to the shell game\nYou will have to guess the correct shell in which the coin is hidden\nYou have 2 attempts\n Good Luck!")
     print("Guess between A, B, C")
 
-    for i in range(2):
-        selected_shell = random.choice(shell)
-        print("Remaining attempts: ", 2-attempt)
-        input_shell = str(input("Your guess: ")).capitalize()
-        while input_shell not in shell:
-            print("Please guess between A, B, C")
-            input_shell = str(input("Your guess: ")).capitalize()
-        if input_shell == selected_shell:
-            print("Correct! You win a key")
-            return True
-        elif i!=1:
-            print("Wrong! Try again")
-        attempt += 1
 
-    print("You lost the game, the key was under the shell : ", selected_shell)
+    # ANIMATION OF THE COIN
+
+    for i in range(30):
+        coin.y -= 100/30
+        win.updateAll()
+    coin.hide = True
+
+    # ANIMATION OF THE CUPS
+
+    time = 5 # seconds
+    j = 0
+    for l in range(30*time+1):
+        if(j%10 == 0):
+            if(l >= 30*time-10):
+                for i,cup in enumerate(cups_pos_goal):
+                    cup[1] = [WIN_WIDTH/4 + 200*i, WIN_HEIGHT/2]
+                    cup[2] = math.sqrt((cup[0][0]-cup[1][0])**2 + (cup[0][1]-cup[1][1])**2)
+            else:
+                for cup in cups_pos_goal:
+                    cup[1] = [random.randint(0,WIN_WIDTH-200),random.randint(int(WIN_HEIGHT/3),WIN_HEIGHT - 200),0]
+                    cup[2] = math.sqrt((cup[0][0]-cup[1][0])**2 + (cup[0][1]-cup[1][1])**2)
+            print(cups_pos_goal[0],cups_pos_goal[1],cups_pos_goal[2])
+        j+=1
+        
+        win.updateAll()
+
+        for i,cup in enumerate(cups_pos_goal):
+            dx = (cup[0][0] - cup[1][0])
+            dy = (cup[0][1] - cup[1][1])
+            d = math.sqrt(dx**2 + dy**2)
+            if(d != 0):
+                dx = dx/d
+                dy = dy/d
+                cup[0][0] -= dx/10*cup[2]
+                cup[0][1] -= dy/10*cup[2]
+
+                cups[i].x = cup[0][0]
+                cups[i].y = cup[0][1]
+
+    # END OF THE ANIMATION
+
+    answer = random.randint(0,2)
+    coin.x = WIN_WIDTH/4 + 200*answer + 200/2-66/2
+    coin.y = WIN_HEIGHT/2+100
+    coin.hide = False
+
+    for i in range(2):
+        cup_selected = None
+
+        for i, cup in enumerate(cups):
+            def create_handler(i):
+                def handler():
+                    nonlocal cup_selected
+                    cup_selected = i
+                return handler
+            cup.onclick = create_handler(i)
+
+        while (cup_selected is None):
+            win.updateAll()
+
+        for i in range(30):
+            cups[cup_selected].y -= 150/30
+            win.updateAll()
+        
+        if(cup_selected == answer):
+            sleep(1)
+            return True
+        else:
+            print("Wrong! Try again")
     return False
 
 def roll_dice_game():
@@ -172,5 +248,4 @@ def chance_challenge():
             title2.hide = True
             title3.hide = False
 
-
-chance_challenge()
+shell_game()

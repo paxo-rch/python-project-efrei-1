@@ -106,12 +106,13 @@ class Object:
         if(self.parent is None):
             pygame.display.flip()
 
-    def updateAll(self):
+    def updateAll(self, delay=True):
         if self.hide:
             return False
         if(self.parent is None):
             self.renderAll()
-            clock.tick(fps)
+            if(delay):
+                clock.tick(fps)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -168,9 +169,9 @@ class Box(Object):
         self.hide_bg = False
     def renderBack(self):
         if not self.transparent:
+            pygame.draw.rect(gui, self.borderColor, (self.x, self.y, self.w, self.h), self.borderWidth, self.radius)
             if not self.hide_bg:
                 pygame.draw.rect(gui, self.backgroundColor, (self.x, self.y, self.w, self.h), 0, self.radius)
-            pygame.draw.rect(gui, self.borderColor, (self.x, self.y, self.w, self.h), self.borderWidth, self.radius)
 
 class Label(Object):
     def __init__(self, x, y, w, h, text):
