@@ -123,7 +123,7 @@ while running:
             #create a box for the image the PRESS SPACE TO PLAY
             text = obj.Box(obj.WIN_WIDTH/3.4, obj.WIN_HEIGHT/1.5, 600, 200)
             #hide the box
-            text.hide = True
+            text.transparent = True
             #load the image	
             text.loadImage("parchemin_menu.png")
             #add the PRESS SPACE TO PLAY box to the window
