@@ -156,25 +156,78 @@ def shell_game():
     return False
 
 def roll_dice_game():
-    attempts = 3
-    for i in range(3):
-        print("Remaining attempts: ", attempts-i)
-        input("Press enter to roll the dice")
-        pdice = (random.randint(1,6),random.randint(1,6))
-        print("You rolled ", pdice[0]," and ", pdice[1])
-        if 6 in pdice:
-            print("You win a key")
-            return True
-        print("Game master turn !")
-        gdice = (random.randint(1,6),random.randint(1,6))
-        print("The game master rolled ", gdice[0]," and ", gdice[1])
-        if 6 in gdice:
-            print("The game master has won !")
-            return False
-        print("No one got 6 moving on the next round")
-    print("No one scored a 6, thats a draw")
-    return False
+    win = Win()
+    win.loadImage("parchemin.jpg")
 
+    title = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "Roll the dice game")
+    title.alignment = CENTER
+    win.add(title)
+
+    name = ["Player", "Master"]
+    whoid = 0
+    who = Label(WIN_WIDTH/2, WIN_HEIGHT/3, 20, 20, "The " + name[whoid] + " plays now:")
+    who.alignment = CENTER
+    win.add(who)
+
+    list_faces = [1,2,3,4,5,6]
+    
+    def move_list():
+        nonlocal list_faces
+        list_faces = list_faces[1:] + [list_faces[0]]
+
+    roll = Label(WIN_WIDTH/4, WIN_HEIGHT/2, WIN_WIDTH/2, 40, str(" | ".join(str(list_faces).split(", "))))
+    roll.alignment = CENTER
+    win.add(roll)
+
+    arrow = Box(WIN_WIDTH/2-135, WIN_HEIGHT/2+30, 40, 40)
+    arrow.loadImage("arrow.png")
+    arrow.transparent = True
+    win.add(arrow)
+
+    button = Label(WIN_WIDTH/3, WIN_HEIGHT/1.5, WIN_WIDTH/3, WIN_WIDTH/8, "Roll the dice")
+    button.alignment = CENTER
+    button.loadImage("small_paper.png")
+    win.add(button)
+
+    def roll_dice():
+        for i in range(random.randint(1,12)):
+            move_list()
+        for i in range(40):
+            move_list()
+            sleep((0.05+i/2/30)**4)
+            roll.text = str(" | ".join(str(list_faces).split(", ")))
+            win.updateAll()
+        return list_faces[0]
+    
+    win.updateAll()
+
+    while True:
+        if(whoid == 0):
+            button.hide = False
+            waiting = True
+            def set_waiting_false():
+                nonlocal waiting
+                waiting = False
+            button.onclick = set_waiting_false
+            while waiting:
+                win.updateAll()
+        else:
+            button.hide = True
+        r = roll_dice()
+        whoid = 1-whoid
+        who.text = "The " + name[whoid] + " plays now:"
+        
+        if(whoid == 1):
+            sleep(2)
+
+        if(whoid == 0 and r == 6):
+            who.text = "The " + name[whoid] + " wins!"
+            for i in range(30):
+                win.updateAll()
+            return True
+        elif(whoid == 1 and r == 6):
+            return False
+        
 def chance_challenge():
     win = Win()
     win.loadImage("parchemin.jpg")
@@ -231,7 +284,7 @@ def chance_challenge():
 
         functions = [shell_game,roll_dice_game]
         challenge =  random.choice(functions)
-        result = random.choice([True, False]) #challenge()
+        result = challenge()
 
         title.hide = True
         button.hide = True
@@ -248,4 +301,4 @@ def chance_challenge():
             title2.hide = True
             title3.hide = False
 
-shell_game()
+chance_challenge()
