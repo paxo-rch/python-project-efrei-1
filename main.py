@@ -174,21 +174,15 @@ while running:
     elif Player_Selection:
         if init_Player_Selection:
             count_text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Choisissez le nombre de joueurs")
-<<<<<<< Updated upstream
             count_text.transparent = True
-
-            counter_box = obj.Box(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/2, 400, 200)
-=======
-            count_text.hide = True
             counter = 0
             counter_box = obj.Box(obj.WIN_WIDTH/3, obj.WIN_HEIGHT/2, 400, 200)
->>>>>>> Stashed changes
             counter_box.hide_bg = True
             counter_box.borderWidth = 5
             counter_box.radius = 10
             w.add(counter_box)
             number_text = obj.Label(counter_box.x+counter_box.w/2, counter_box.y+counter_box.h/2, 0, 0, "1")
-            number_text.hide = True
+            number_text.transparent = True
             w.add(number_text)
             plus_box = obj.Box(counter_box.x+counter_box.w/1.5, counter_box.y+counter_box.h/3.25, 100, 100)
             plus_box.hide_bg = True
@@ -196,50 +190,32 @@ while running:
             plus_box.radius = 10
             w.add(plus_box)
             plus_text = obj.Label(counter_box.x+counter_box.w/1.25, counter_box.y+counter_box.h/1.75, 0, 0, "+")
-            plus_text.hide = True
+            plus_text.transparent = True
             w.add(plus_text)
             minus_box = obj.Box(counter_box.x+counter_box.w/8, counter_box.y+counter_box.h/3.25, 100, 100)
             minus_box.hide_bg = True
             minus_box.borderWidth = 5
             minus_box.radius = 10
-<<<<<<< Updated upstream
-            counter_box.add(minus_box)
-            minus_text = obj.Label(minus_box.x+minus_box.w/2, minus_box.y+minus_box.h/2, 0, 0, "-")
-            minus_box.add(minus_text)
-            counter_box.transparent = True
-            minus_box.transparent = True
-            plus_box.transparent = True
-            
-=======
             w.add(minus_box)
             minus_text = obj.Label(counter_box.x+counter_box.w/4, counter_box.y+counter_box.h/1.75, 0, 0, "-")
-            minus_text.hide = True
+            minus_text.transparent = True
             w.add(minus_text)
-            minus_box.hide = True
-            plus_box.hide = True
-            counter_box.hide = True
->>>>>>> Stashed changes
+            minus_box.transparent = True
+            plus_box.transparent = True
+            counter_box.transparent = True
             w.add(count_text)
             nuage_forward()
             w.destroy(button_skip)
             w.destroy(label_intro)
-<<<<<<< Updated upstream
             count_text.transparent = False
             minus_box.transparent = False
             plus_box.transparent = False
+            plus_text.transparent = False
+            minus_text.transparent = False
+            number_text.transparent = False
             counter_box.transparent = False
-            print(counter_box.x, counter_box.y, counter_box.w, counter_box.h)
-=======
-            count_text.hide = False
-            minus_box.hide = False
-            plus_box.hide = False
-            plus_text.hide = False
-            minus_text.hide = False
-            number_text.hide = False
-            counter_box.hide = False
             plus_box.onclick = CounterListenerPlus
             minus_box.onclick = CounterListenerMinus
->>>>>>> Stashed changes
             nuage_backward()
             init_Player_Selection = False
     w.updateAll()
