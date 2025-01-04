@@ -339,6 +339,9 @@ def chance_challenge():
         # Wait for player input.
         while loop2:
             win.updateAll()
+        
+        if(loop1 == False):
+            break
 
         # Select and play a random challenge.
         functions = [shell_game,roll_dice_game]
