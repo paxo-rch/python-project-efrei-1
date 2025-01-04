@@ -410,7 +410,7 @@ def PlayerChoice(game):
                 if key_player != 0:
                     players[key_player-1]["key"] += 1
                 ChallengeMenu()
-            if game == "math":
+            elif game == "math":
                 key_player = math_challenges.math_challenge(counter)
                 if key_player != 0:
                     players[key_player-1]["key"] += 1

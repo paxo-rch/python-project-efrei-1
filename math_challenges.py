@@ -114,7 +114,7 @@ def equation_challenge():
     w.add(solution_text1)
     slash_text = obj.Label(obj.WIN_WIDTH/2.2, obj.WIN_HEIGHT/1.75, 0, 0, "/")
     w.add(slash_text)
-    box_minus = obj.Box(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/1.2, 100, 100)
+    box_minus = obj.Box(obj.WIN_WIDTH/5, obj.WIN_HEIGHT/2, 100, 100)
     box_minus.hide_bg = True
     box_minus.borderWidth = 5
     box_minus.radius = 100
@@ -146,7 +146,6 @@ def equation_challenge():
                                     solution_text.text = solution_text.text[:-1]
                                 elif solution_hover1:
                                     solution_text1.text = solution_text1.text[:-1]
-
                             break
     
     def button_listener():
@@ -404,4 +403,3 @@ def math_challenge(player):
             else:
                 return 0
         win.updateAll()
-print(equation_challenge())
