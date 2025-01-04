@@ -1,53 +1,83 @@
 import random
 def shell_game():
+    # Simulates a shell game.
+    # Parameters: None
+    # Returns: True if the player guesses correctly, False otherwise.
     shell = ['A','B','C']
     attempt = 0
-    
+
     slected_player = ""
     print("Welcome to the shell game\nYou will have to guess the correct shell in which the coin is hidden\nYou have 2 attempts\n Good Luck!")
     print("Guess between A, B, C")
     for i in range(2):
+        # Select a random shell where the coin is hidden.
         selected_shell = random.choice(shell)
         print("Remaining attempts: ", 2-attempt)
+
+        # Get the player's guess.
         input_shell = str(input("Your guess: ")).capitalize()
+
+        # Validate the player's input.
         while input_shell not in shell:
             print("Please guess between A, B, C")
             input_shell = str(input("Your guess: ")).capitalize()
+
+        # Check if the guess is correct.
         if input_shell == selected_shell:
             print("Correct! You win a key")
             return True
+        
+        # Provide feedback if the guess is wrong and attempts remain.
         elif i!=1:
             print("Wrong! Try again")
         attempt += 1
 
+    # Player lost the game.
     print("You lost the game, the key was under the shell : ", selected_shell)
     return False
 
 def roll_dice_game():
+    # Simulates a dice rolling game against a game master.
+    # Parameters: None
+    # Returns: True if the player rolls a 6, False if the game master rolls a 6 or it's a draw.
+
     attempts = 3
     for i in range(3):
         print("Remaining attempts: ", attempts-i)
         input("Press enter to roll the dice")
+
+        # Player rolls two dice.
         pdice = (random.randint(1,6),random.randint(1,6))
         print("You rolled ", pdice[0]," and ", pdice[1])
+
+        # Check if the player rolled a 6.
         if 6 in pdice:
             print("You win a key")
             return True
         print("Game master turn !")
+
+        # Game master rolls two dice.
         gdice = (random.randint(1,6),random.randint(1,6))
         print("The game master rolled ", gdice[0]," and ", gdice[1])
+
+        # Check if the game master rolled a 6.
         if 6 in gdice:
             print("The game master has won !")
             return False
         print("No one got 6 moving on the next round")
+
+    # No one scored a 6, it's a draw.
     print("No one scored a 6, thats a draw")
     return False
 
 def chance_challenge():
+    # Randomly selects and runs one of the available mini-games.
+    # Parameters: None
+    # Returns: The return value of the selected mini-game (True or False).
     functions = [shell_game,roll_dice_game]
+    # Randomly choose a game to play.
     challenge =  random.choice(functions)
     return challenge()
-
 
 ############# With interface version
 
@@ -57,6 +87,9 @@ from time import *
 import points
 
 def shell_game():
+    # The shell game with a graphical interface.
+    # Parameters: None
+    # Returns: True if the player guesses correctly, False otherwise.
     win = Win()
     win.loadImage("parchemin.jpg")
 
@@ -72,6 +105,7 @@ def shell_game():
     cups = []
     cups_pos_goal = []
 
+    # Create and position the cups.
     for i in range(3):
         cup = Box(WIN_WIDTH/4 + 200*i, WIN_HEIGHT/2, 200, 200)
         cups_pos_goal.append([[cup.x,cup.y],[cup.x,cup.y],0])
@@ -82,7 +116,6 @@ def shell_game():
 
     print("Welcome to the shell game\nYou will have to guess the correct shell in which the coin is hidden\nYou have 2 attempts\n Good Luck!")
     print("Guess between A, B, C")
-
 
     # ANIMATION OF THE COIN
 
@@ -98,33 +131,40 @@ def shell_game():
     for l in range(30*time+1):
         if(j%10 == 0):
             if(l >= 30*time-10):
+                # Move the cups back to their original positions.
                 for i,cup in enumerate(cups_pos_goal):
                     cup[1] = [WIN_WIDTH/4 + 200*i, WIN_HEIGHT/2]
                     cup[2] = math.sqrt((cup[0][0]-cup[1][0])**2 + (cup[0][1]-cup[1][1])**2)
             else:
+                # Randomly position the cups.
                 for cup in cups_pos_goal:
                     cup[1] = [random.randint(0,WIN_WIDTH-200),random.randint(int(WIN_HEIGHT/3),WIN_HEIGHT - 200),0]
                     cup[2] = math.sqrt((cup[0][0]-cup[1][0])**2 + (cup[0][1]-cup[1][1])**2)
-            print(cups_pos_goal[0],cups_pos_goal[1],cups_pos_goal[2])
         j+=1
-        
+
         win.updateAll()
 
-        for i,cup in enumerate(cups_pos_goal):
-            dx = (cup[0][0] - cup[1][0])
-            dy = (cup[0][1] - cup[1][1])
+        # Move the cups towards their target positions.
+        for i, cup in enumerate(cups_pos_goal):
+            # Calculate the difference in x and y positions
+            dx = cup[0][0] - cup[1][0]
+            dy = cup[0][1] - cup[1][1]
+            # Calculate the distance between current and target position
             d = math.sqrt(dx**2 + dy**2)
-            if(d != 0):
-                dx = dx/d
-                dy = dy/d
-                cup[0][0] -= dx/10*cup[2]
-                cup[0][1] -= dy/10*cup[2]
-
+            if d != 0:
+                # Normalize the distance
+                dx /= d
+                dy /= d
+                # Move the cup towards the target position
+                cup[0][0] -= dx / 10 * cup[2]
+                cup[0][1] -= dy / 10 * cup[2]
+                # Update the cup's position
                 cups[i].x = cup[0][0]
                 cups[i].y = cup[0][1]
 
     # END OF THE ANIMATION
 
+    # Determine the correct shell and hide the coin
     answer = random.randint(0,2)
     coin.x = WIN_WIDTH/4 + 200*answer + 200/2-66/2
     coin.y = WIN_HEIGHT/2+100
@@ -133,6 +173,7 @@ def shell_game():
     for i in range(2):
         cup_selected = None
 
+        # Set up click handlers for each cup.
         for i, cup in enumerate(cups):
             def create_handler(i):
                 def handler():
@@ -141,13 +182,16 @@ def shell_game():
                 return handler
             cup.onclick = create_handler(i)
 
+        # Wait for the player to select a cup.
         while (cup_selected is None):
             win.updateAll()
 
+        # Animate the selected cup lifting.
         for i in range(30):
             cups[cup_selected].y -= 150/30
             win.updateAll()
-        
+
+        # Check if the selected cup is the correct one.
         if(cup_selected == answer):
             sleep(1)
             return True
@@ -156,6 +200,9 @@ def shell_game():
     return False
 
 def roll_dice_game():
+    # Simulates a dice rolling game with a graphical interface.
+    # Parameters: None
+    # Returns: True if the player rolls a 6, False otherwise.
     win = Win()
     win.loadImage("parchemin.jpg")
 
@@ -170,8 +217,9 @@ def roll_dice_game():
     win.add(who)
 
     list_faces = [1,2,3,4,5,6]
-    
+
     def move_list():
+        # Rotates the list of dice faces to simulate rolling.
         nonlocal list_faces
         list_faces = list_faces[1:] + [list_faces[0]]
 
@@ -190,6 +238,7 @@ def roll_dice_game():
     win.add(button)
 
     def roll_dice():
+        # Simulates the rolling of the dice with animation.
         for i in range(random.randint(1,12)):
             move_list()
         for i in range(40):
@@ -198,10 +247,11 @@ def roll_dice_game():
             roll.text = str(" | ".join(str(list_faces).split(", ")))
             win.updateAll()
         return list_faces[0]
-    
+
     win.updateAll()
 
     while True:
+        # Player's turn.
         if(whoid == 0):
             button.hide = False
             waiting = True
@@ -211,15 +261,17 @@ def roll_dice_game():
             button.onclick = set_waiting_false
             while waiting:
                 win.updateAll()
+        # Game master's turn.
         else:
             button.hide = True
         r = roll_dice()
         whoid = 1-whoid
         who.text = "The " + name[whoid] + " plays now:"
-        
+
         if(whoid == 1):
             sleep(2)
 
+        # Check the winner.
         if(whoid == 1 and r == 6):
             who.text = "The " + name[1-whoid] + " wins!"
             for i in range(30):
@@ -227,8 +279,11 @@ def roll_dice_game():
             return True
         elif(whoid == 0 and r == 6):
             return False
-        
+
 def chance_challenge():
+    # Presents a graphical interface for selecting and playing a random mini-game.
+    # Parameters: None
+    # Returns: None. This function manages the game flow and doesn't directly return a meaningful value.
     win = Win()
     win.loadImage("parchemin.jpg")
 
@@ -245,7 +300,6 @@ def chance_challenge():
     title3.alignment = CENTER
     title3.hide = True
     win.add(title3)
-
 
     button = Label(WIN_WIDTH/3, WIN_HEIGHT/2, WIN_WIDTH/3, WIN_WIDTH/8, "Choose a random \nchallenge")
     button.alignment = CENTER
@@ -266,31 +320,36 @@ def chance_challenge():
 
     loop1 = True
     def global_exit():
+        # Sets flags to exit both loops.
         nonlocal loop1, loop2
         loop1 = False
         loop2 = False
     exit.onclick = global_exit
 
+    # Main game loop.
     while loop1:
         loop2 = True
         def set_loop_false():
+            # Sets a flag to exit the inner loop.
             nonlocal loop2
             loop2 = False
         button.onclick = set_loop_false
         replay.onclick = set_loop_false
 
+        # Wait for player input.
         while loop2:
             win.updateAll()
 
+        # Select and play a random challenge.
         functions = [shell_game,roll_dice_game]
         challenge =  random.choice(functions)
         result = challenge()
 
+        # Show appropriate messages and buttons based on the game result.
         title.hide = True
         button.hide = True
         exit.hide = False
         replay.hide = False
-        
 
         if(result):
             points.register_points("chance_challenge", 1)
