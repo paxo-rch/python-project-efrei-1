@@ -3,6 +3,7 @@ import pygame
 import time
 from pygamevideo import Video
 import chance_challenges
+import math_challenges
 from Utils import *
 
 
@@ -70,7 +71,7 @@ def Introduction():
     button_skip.borderWidth = 5
     button_skip.radius = 10
     button_skip.hide_bg = True
-    skip_text = obj.Label(0, 0, 200, 100, "Passer")
+    skip_text = obj.Label(0, 0, 200, 100, "Skip")
     button_skip.add(skip_text)
     w.add(button_skip)
     w.loadImage("parchemin.jpg")
@@ -78,7 +79,7 @@ def Introduction():
     def button_listener():
 
         nonlocal Intro_Skiped, text_done
-        if skip_text.text == "Passer":
+        if skip_text.text == "Skip":
 
             Intro_Skiped = True
         if text_done:
@@ -88,7 +89,7 @@ def Introduction():
             PlayerCount()
     button_skip.onclick = button_listener
     nuage_backward(w)
-    text_intro = "Bienvenue à vous jeunes aventuriers\nVous recherchez la gloire, le pouvoir et la richesse ?\nVous êtes au bon endroit.\nIci vous pourrez obtenir tous ce que vous désirez,\nmais pour cela il faudra réussir les épreuves choisis par le maitre du jeu\nBonne chance!"
+    text_intro = "Welcome to you young adventurers\nAre you looking for glory, power and wealth?\nYou are in the right place.\nHere you can get everything you want,\nbut for that you will have to succeed in the tests chosen by the master of the game\nGood luck!"
     label_intro = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/2, 15, 15,"")
     w.add(label_intro)
 
@@ -102,7 +103,7 @@ def Introduction():
             label_intro.text = text_intro
             break
 
-    skip_text.text = "Continuer"
+    skip_text.text = "Continue"
     text_done = True
 
     while True:
@@ -113,16 +114,15 @@ def Introduction():
 def PlayerCount():
     global counter
     w = obj.Win()
-    w.hide_bg = False
     w.loadImage("parchemin.jpg")
     button_continuer = obj.Box(obj.WIN_WIDTH/1.3, obj.WIN_HEIGHT/1.25, 200, 100)
     button_continuer.borderWidth = 5
     button_continuer.radius = 10
     button_continuer.hide_bg = True
-    continuer_text = obj.Label(0, 0, 200, 100, "Continuer")
+    continuer_text = obj.Label(0, 0, 200, 100, "Continue")
     button_continuer.add(continuer_text)
     w.add(button_continuer)
-    count_text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Choisissez le nombre de joueurs")
+    count_text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Chose the number of players")
     counter = 1
     counter_box = obj.Box(obj.WIN_WIDTH/3, obj.WIN_HEIGHT/2, 400, 200)
     counter_box.hide_bg = True
@@ -187,9 +187,8 @@ def Compose_Equipe(nbr):
     nbr_joueurs = nbr+1
     players = []
     w = obj.Win()
-    w.hide_bg = False
     w.loadImage("parchemin.jpg")
-    texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Choisissez les caractéristiques du joueur 1")
+    texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Chose player 1 informations")
     w.add(texte)
     box_name = obj.Box(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/2, 600, 100)
     box_name.hide_bg = True
@@ -222,7 +221,7 @@ def Compose_Equipe(nbr):
     button_continuer.radius = 10
     button_continuer.hide_bg = True
     w.add(button_continuer)
-    continuer_text = obj.Label(0, 0, 200, 100, "Continuer")
+    continuer_text = obj.Label(0, 0, 200, 100, "Continue")
     button_continuer.add(continuer_text)
     nuage_backward(w)
     leader = False
@@ -273,7 +272,7 @@ def Compose_Equipe(nbr):
             profession_text.text = ""
             leader = False
             box_leader.hide_bg = True
-            texte.text = "Choisissez les caractéristiques du joueur "+str(nbr_joueurs-nbr)
+            texte.text = "Chose player "+str(nbr_joueurs-nbr) + " informations"
     obj.Object.onkeyboard = keyboard_listener
     box_name.onstartfocused = name_listener
     box_name.onendfocused = name_listener
@@ -295,7 +294,7 @@ def Compose_Equipe(nbr):
 def ChallengeMenu():
     w = obj.Win()
     w.loadImage("parchemin.jpg")
-    texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/4, 0, 0, "Choisissez le challenge")
+    texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/4, 0, 0, "Chose the challenge")
     w.add(texte)
     math_button = obj.Box(obj.WIN_WIDTH/2.3, obj.WIN_HEIGHT/3, 200, 100)
     math_button.borderWidth = 5
@@ -304,7 +303,6 @@ def ChallengeMenu():
     w.add(math_button)
     math_texte = obj.Label(obj.WIN_WIDTH/1.95, obj.WIN_HEIGHT/2.5, 0, 0, "Math")
     w.add(math_texte)
-    #math_button.onclick = math_challenge
     logic_button = obj.Box(obj.WIN_WIDTH/2.3, obj.WIN_HEIGHT/2, 200, 100)
     logic_button.borderWidth = 5
     logic_button.radius = 10
@@ -330,28 +328,34 @@ def ChallengeMenu():
     #perefourras_button.onclick = perefourras_challenge
     nuage_backward(w)
     animation = True
-    def challenge_listener():
+    def chance_listener():
         nonlocal animation
         if animation:
             animation = False
             nuage_forward(w)
             PlayerChoice("luck")
-    chance_button.onclick = challenge_listener
+    def math_listener():
+        nonlocal animation
+        if animation:
+            animation = False
+            nuage_forward(w)
+            PlayerChoice("math")
+    math_button.onclick = math_listener
+    chance_button.onclick = chance_listener
     while True:
         w.updateAll()
 def PlayerChoice(game):
 
     w = obj.Win()
-    w.hide_bg = False
     w.loadImage("parchemin.jpg")
     button_continuer = obj.Box(obj.WIN_WIDTH/1.3, obj.WIN_HEIGHT/1.25, 200, 100)
     button_continuer.borderWidth = 5
     button_continuer.radius = 10
     button_continuer.hide_bg = True
-    continuer_text = obj.Label(0, 0, 200, 100, "Continuer")
+    continuer_text = obj.Label(0, 0, 200, 100, "Continue")
     button_continuer.add(continuer_text)
     w.add(button_continuer)
-    count_text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Choisissez le joueur")
+    count_text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Chose the player")
     count = 1
     counter_box = obj.Box(obj.WIN_WIDTH/3, obj.WIN_HEIGHT/2, 400, 200)
     counter_box.hide_bg = True
@@ -405,8 +409,12 @@ def PlayerChoice(game):
                 key_player = chance_challenges.chance_challenge(counter)
                 if key_player != 0:
                     players[key_player-1]["key"] += 1
-                print(players)
                 ChallengeMenu()
+            if game == "math":
+                key_player = math_challenges.math_challenge(counter)
+                if key_player != 0:
+                    players[key_player-1]["key"] += 1
+                print(players)
 
     continuer = True
     plus_box.onclick = CounterListenerPlus

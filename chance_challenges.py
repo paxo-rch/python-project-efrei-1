@@ -333,8 +333,8 @@ def chance_challenge(player):
         # Show appropriate messages and buttons based on the game result.
         title.hide = True
         button.hide = True
-        exit.hide = False
         result = challenge()
+        exit.hide = False
         if(result):
             title2.hide = False
             title3.hide = True
