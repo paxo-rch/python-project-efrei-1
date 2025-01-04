@@ -14,14 +14,14 @@ def nuage_forward():
     nuages1 = []
     #create a box to contain the clouds
     sky_box = obj.Box(0, 0, obj.WIN_WIDTH, obj.WIN_HEIGHT)
-    sky_box.hide = True
+    sky_box.transparent = True
     w.add(sky_box)
     #loop that creates 4 clouds on each sides
     for i in range(4):
         #create a box containing a cloud on the left
         nuage = obj.Box(-1700, -500+i*200, 1700, 1000)
         #hiding the box
-        nuage.hide = True
+        nuage.transparent = True
         #loading the cloud image
         nuage.loadImage("nuagenobg1.png")
         #adding the cloud to the main box
@@ -30,7 +30,7 @@ def nuage_forward():
         #create a box containing a cloud on the left
         nuage = obj.Box(obj.WIN_WIDTH, -500+i*200, 1700, 1000)
         #hiding the box
-        nuage.hide = True
+        nuage.transparent = True
         #loading the cloud image
         nuage.loadImage("nuagenobg1.png")
         #adding the cloud to the main box
@@ -84,7 +84,15 @@ def button_skip_listener():
         Intro = False
         Player_Selection = True
         init_Player_Selection = True
-
+def CounterListenerPlus():
+    global counter, number_text
+    counter += 1
+    number_text.text = str(counter)
+def CounterListenerMinus():
+    global counter, number_text
+    if counter > 1:
+        counter -= 1
+        number_text.text = str(counter)
 #create the main window
 w = obj.Win()
 #set the window name
@@ -123,7 +131,7 @@ while running:
             #create a box for the title
             titlebox = obj.Box(obj.WIN_WIDTH/3, obj.WIN_HEIGHT/10, 500, 400)
             #hide the box
-            titlebox.hide = True
+            titlebox.transparent = True
             #load the image
             titlebox.loadImage("titrefort.png")
             w.add(titlebox)
@@ -139,7 +147,7 @@ while running:
             button_skip.borderWidth = 5
             button_skip.radius = 10
             button_skip.hide_bg = True
-            button_skip.hide = True
+            button_skip.transparent = True
             skip_text = obj.Label(0, 0, 200, 100, "Passer")
             button_skip.add(skip_text)
             w.add(button_skip)
@@ -148,7 +156,7 @@ while running:
             w.destroy(titlebox)
             w.destroy(text)
             w.loadImage("parchemin.jpg")
-            button_skip.hide = False
+            button_skip.transparent = False
             button_skip.onclick = button_skip_listener
             nuage_backward()
             text_intro = "Bienvenue à vous jeunes aventuriers\nVous recherchez la gloire, le pouvoir et la richesse ?\nVous êtes au bon endroit.\nIci vous pourrez obtenir tous ce que vous désirez,\nmais pour cela il faudra réussir les épreuves choisis par le maitre du jeu\nBonne chance!"
@@ -166,7 +174,7 @@ while running:
     elif Player_Selection:
         if init_Player_Selection:
             count_text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Choisissez le nombre de joueurs")
-            count_text.hide = True
+            count_text.transparent = True
 
             counter_box = obj.Box(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/2, 400, 200)
             counter_box.hide_bg = True
@@ -189,18 +197,18 @@ while running:
             counter_box.add(minus_box)
             minus_text = obj.Label(minus_box.x+minus_box.w/2, minus_box.y+minus_box.h/2, 0, 0, "-")
             minus_box.add(minus_text)
-            counter_box.hide = True
-            minus_box.hide = True
-            plus_box.hide = True
+            counter_box.transparent = True
+            minus_box.transparent = True
+            plus_box.transparent = True
             
             w.add(count_text)
             nuage_forward()
             w.destroy(button_skip)
             w.destroy(label_intro)
-            count_text.hide = False
-            minus_box.hide = False
-            plus_box.hide = False
-            counter_box.hide = False
+            count_text.transparent = False
+            minus_box.transparent = False
+            plus_box.transparent = False
+            counter_box.transparent = False
             print(counter_box.x, counter_box.y, counter_box.w, counter_box.h)
             nuage_backward()
             init_Player_Selection = False
