@@ -312,12 +312,6 @@ def chance_challenge():
     exit.hide = True
     win.add(exit)
 
-    replay = Label(WIN_WIDTH*5/8, WIN_HEIGHT/2, WIN_WIDTH/4, WIN_WIDTH/8, "Play again")
-    replay.alignment = CENTER
-    replay.loadImage("small_paper.png")
-    replay.hide = True
-    win.add(replay)
-    
     nuage_backward(win)
 
     loop1 = True
@@ -338,8 +332,6 @@ def chance_challenge():
             nonlocal loop2
             loop2 = False
         button.onclick = set_loop_false
-        replay.onclick = set_loop_false
-
         # Wait for player input.
         while loop2:
             win.updateAll()
@@ -356,7 +348,6 @@ def chance_challenge():
         title.hide = True
         button.hide = True
         exit.hide = False
-        replay.hide = False
 
         if(result):
             points.register_points("chance_challenge", 1)
