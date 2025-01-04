@@ -1,5 +1,6 @@
 import random
-def shell_game():
+from Utils import *
+"""def shell_game():
     shell = ['A','B','C']
     attempt = 0
     
@@ -47,7 +48,7 @@ def chance_challenge():
     functions = [shell_game,roll_dice_game]
     challenge =  random.choice(functions)
     return challenge()
-
+"""
 
 ############# With interface version
 
@@ -55,6 +56,8 @@ from graphics.objects import *
 import math
 from time import *
 import points
+
+
 
 def shell_game():
     win = Win()
@@ -188,7 +191,6 @@ def roll_dice_game():
     button.alignment = CENTER
     button.loadImage("small_paper.png")
     win.add(button)
-
     def roll_dice():
         for i in range(random.randint(1,12)):
             move_list()
@@ -263,12 +265,16 @@ def chance_challenge():
     replay.loadImage("small_paper.png")
     replay.hide = True
     win.add(replay)
+    
+    nuage_backward(win)
 
     loop1 = True
     def global_exit():
         nonlocal loop1, loop2
-        loop1 = False
-        loop2 = False
+        if loop1:
+            loop1 = False
+            loop2 = False
+            nuage_forward(win)
     exit.onclick = global_exit
 
     while loop1:
@@ -285,7 +291,7 @@ def chance_challenge():
         functions = [shell_game,roll_dice_game]
         challenge =  random.choice(functions)
         result = challenge()
-
+        
         title.hide = True
         button.hide = True
         exit.hide = False
@@ -301,4 +307,3 @@ def chance_challenge():
             title2.hide = True
             title3.hide = False
 
-chance_challenge()
