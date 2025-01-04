@@ -122,7 +122,7 @@ def PlayerCount():
     continuer_text = obj.Label(0, 0, 200, 100, "Continue")
     button_continuer.add(continuer_text)
     w.add(button_continuer)
-    count_text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Chose the number of players")
+    count_text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Choose the number of players")
     counter = 1
     counter_box = obj.Box(obj.WIN_WIDTH/3, obj.WIN_HEIGHT/2, 400, 200)
     counter_box.hide_bg = True
@@ -188,7 +188,7 @@ def Compose_Equipe(nbr):
     players = []
     w = obj.Win()
     w.loadImage("parchemin.jpg")
-    texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Chose player 1 informations")
+    texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Choose player 1 informations")
     w.add(texte)
     box_name = obj.Box(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/2, 600, 100)
     box_name.hide_bg = True
@@ -272,7 +272,7 @@ def Compose_Equipe(nbr):
             profession_text.text = ""
             leader = False
             box_leader.hide_bg = True
-            texte.text = "Chose player "+str(nbr_joueurs-nbr) + " informations"
+            texte.text = "Enter player "+str(nbr_joueurs-nbr) + " informations"
     obj.Object.onkeyboard = keyboard_listener
     box_name.onstartfocused = name_listener
     box_name.onendfocused = name_listener
@@ -294,7 +294,7 @@ def Compose_Equipe(nbr):
 def ChallengeMenu():
     w = obj.Win()
     w.loadImage("parchemin.jpg")
-    texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/4, 0, 0, "Chose the challenge")
+    texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/4, 0, 0, "Choose the challenge")
     w.add(texte)
     math_button = obj.Box(obj.WIN_WIDTH/2.3, obj.WIN_HEIGHT/3, 200, 100)
     math_button.borderWidth = 5
@@ -355,7 +355,7 @@ def PlayerChoice(game):
     continuer_text = obj.Label(0, 0, 200, 100, "Continue")
     button_continuer.add(continuer_text)
     w.add(button_continuer)
-    count_text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Chose the player")
+    count_text = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Choose the player")
     count = 1
     counter_box = obj.Box(obj.WIN_WIDTH/3, obj.WIN_HEIGHT/2, 400, 200)
     counter_box.hide_bg = True
