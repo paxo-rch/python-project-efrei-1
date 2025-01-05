@@ -10,6 +10,7 @@ import math_challenges
 import logical_challenges
 from Utils import *
 import final_challenge
+import the_pere_fouras_challenge
 
 
 def StartMenufunc():
@@ -193,7 +194,7 @@ def Compose_Equipe(nbr):
     players = []
     w = obj.Win()
     w.loadImage("parchemin.jpg")
-    texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Choose player 1 informations")
+    texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Enter player 1 informations")
     w.add(texte)
     box_name = obj.Box(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/2, 600, 100)
     box_name.hide_bg = True
@@ -271,7 +272,7 @@ def Compose_Equipe(nbr):
     def button_listener():
         nonlocal nbr, leader
         nbr -= 1
-        players.append({"name":name_text.text,"profession":profession_text.text,"leader":leader,"key":0})
+        players.append({"name":name_text.text,"profession":profession_text.text,"leader":leader,"keys":0})
         if nbr > 0:
             name_text.text = ""
             profession_text.text = ""
@@ -351,9 +352,16 @@ def ChallengeMenu():
             animation = False
             nuage_forward(w)
             PlayerChoice("logical")
+    def perefourras_listener():
+        nonlocal animation
+        if animation:
+            animation = False
+            nuage_forward(w)
+            PlayerChoice("riddles")
     math_button.onclick = math_listener
     chance_button.onclick = chance_listener
     logic_button.onclick = logic_listener
+    perefourras_button.onclick = perefourras_listener
     while True:
         w.updateAll()
 def PlayerChoice(game):
@@ -418,7 +426,7 @@ def PlayerChoice(game):
             continuer = False
             nuage_forward(w)
             if game == "luck":
-                key_player = chance_challenges.chance_challenge(counter)
+                key_player = chance_challenges.chance_challenge(count)
                 if key_player != 0:
                     players[key_player-1]["keys"] += 1
                 nbr_key = 0
@@ -429,7 +437,7 @@ def PlayerChoice(game):
                 else:
                     ChallengeMenu()
             elif game == "math":
-                key_player = math_challenges.math_challenge(counter)
+                key_player = math_challenges.math_challenge(count)
                 if key_player != 0:
                     players[key_player-1]["keys"] += 1
                 nbr_key = 0
@@ -440,7 +448,18 @@ def PlayerChoice(game):
                 else:
                     ChallengeMenu()
             elif game == "logical":
-                key_player = logical_challenges.nim_game(counter)
+                key_player = logical_challenges.nim_game(count)
+                if key_player != 0:
+                    players[key_player-1]["keys"] += 1
+                nbr_key = 0
+                for i in players:
+                    nbr_key += i["keys"]
+                if nbr_key >= 3:
+                    final_challenge.final_challenge(players)
+                else:
+                    ChallengeMenu()
+            elif game == "riddles":
+                key_player = the_pere_fouras_challenge.pere_fouras_riddles(count)
                 if key_player != 0:
                     players[key_player-1]["keys"] += 1
                 nbr_key = 0
@@ -457,3 +476,4 @@ def PlayerChoice(game):
     button_continuer.onclick = button_listener
     while True:
         w.updateAll()
+PlayerCount()

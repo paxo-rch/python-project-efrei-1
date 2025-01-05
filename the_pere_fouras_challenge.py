@@ -137,4 +137,3 @@ def pere_fouras_riddles(player):
     else:
         return 0
 
-pere_fouras_riddles(1)
