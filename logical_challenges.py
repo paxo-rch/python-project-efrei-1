@@ -411,7 +411,7 @@ def winner(who):
     title3.hide = True
     w.add(title3)
 
-    exit = Label(WIN_WIDTH/8, WIN_HEIGHT/2, WIN_WIDTH/4, WIN_WIDTH/8, "Exit")
+    exit = Label(WIN_WIDTH/2.7, WIN_HEIGHT/2, WIN_WIDTH/4, WIN_WIDTH/8, "Exit")
     exit.alignment = CENTER
     exit.loadImage("small_paper.png")
     w.add(exit)

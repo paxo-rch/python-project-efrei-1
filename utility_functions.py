@@ -476,4 +476,3 @@ def PlayerChoice(game):
     button_continuer.onclick = button_listener
     while True:
         w.updateAll()
-PlayerCount()
