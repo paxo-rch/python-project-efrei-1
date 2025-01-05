@@ -366,6 +366,7 @@ def nim_game(player):
                 Returns:
                     A function that handles the button click.
                 """
+                history("Player selected " + str(t) + " stick")
                 def handler():
                     nonlocal torm
                     torm = t

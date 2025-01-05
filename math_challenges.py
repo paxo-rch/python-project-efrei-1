@@ -305,6 +305,7 @@ def equation_challenge():
     def button_listener():
         nonlocal continuer
         if continuer:
+            history("Submitted equation")
             continuer = False
     # Define a function to verify which box is selected
     def solution_listener():
@@ -416,6 +417,7 @@ def factorial_challenge():
     def button_listener():
         nonlocal continuer
         if continuer:
+            history("Submitted factorial")
             continuer = False
 
     obj.Object.onkeyboard = keyboard_listener
@@ -548,6 +550,7 @@ def prime_challenge():
     def button_listener():
         nonlocal continuer
         if continuer:
+            history("Submitted prime")
             continuer = False
     # Set a variable to know when to continue
     continuer = True

@@ -184,6 +184,7 @@ def shell_game():
             def create_handler(i):
                 def handler():
                     nonlocal cup_selected
+                    history("Selected cup " + str(i))
                     cup_selected = i
                 return handler
             cup.onclick = create_handler(i)
@@ -244,6 +245,7 @@ def roll_dice_game():
     win.add(button)
     def roll_dice():
         # Simulates the rolling of the dice with animation.
+        history("Rolled the dice")
         for i in range(random.randint(1,12)):
             move_list()
         for i in range(40):

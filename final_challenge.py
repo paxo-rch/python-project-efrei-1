@@ -5,7 +5,7 @@ from the_pere_fouras_challenge import load_riddles
 import random
 
 def treasure_room():
-    tv_game = load_riddles("TRClues.json")
+    tv_game = load_riddles("data/TRClues.json")
     year = random.choice(list(tv_game["Fort Boyard"].keys()))
     show = random.choice(list(tv_game["Fort Boyard"][year].keys()))
     clues = tv_game["Fort Boyard"][year][show]["Clues"]
@@ -89,6 +89,7 @@ def final_challenge(players):
     def button_listener():
         nonlocal nbr_attempts, found
         nbr_attempts -= 1
+        history("Submitted code: "+code_text.text)
         if code_text.text == code.lower() and not found:
             found = True
             nuage_forward(w)

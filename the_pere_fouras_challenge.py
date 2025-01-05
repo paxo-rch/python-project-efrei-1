@@ -10,7 +10,7 @@ def load_riddles(file):
     return riddles
 
 def pere_fouras_riddles():
-    riddles = load_riddles("PFRiddles.json")
+    riddles = load_riddles("data/PFRiddles.json")
     riddle = random.choice(riddles)
     while riddle["type"] != "Key":
         riddle = random.choice(riddles)
@@ -43,7 +43,7 @@ from Utils import *
 
 def pere_fouras_riddles(player):
     # Loads riddles from a JSON file.
-    riddles = load_riddles("PFRiddles.json")
+    riddles = load_riddles("data/PFRiddles.json")
     # Selects a random riddle of type "Key".
     riddle = random.choice(riddles)
     while riddle["type"] != "Key":
@@ -90,7 +90,7 @@ def pere_fouras_riddles(player):
         nonlocal attempt, game_over, result
         answer = input_label.text.lower()
         input_label.text = ""
-
+        history("Submitted answer: " + answer)
         if answer == riddle["answer"].lower():
             print("Correct! You win a key")
             title.text = "Correct! You win a key"
