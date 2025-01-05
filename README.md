@@ -313,3 +313,21 @@ Here are some screenshots showing the tests in action (you would replace these w
 **Game Won**
 
 ![Game Won](images_project/gamewon.png)
+
+**Other games**
+
+![Other games](images_project/1.png)
+
+![Other games](images_project/2.png)
+
+![Other games](images_project/3.png)
+
+![Other games](images_project/4.png)
+
+![Other games](images_project/5.png)
+
+![Other games](images_project/6.png)
+
+![Other games](images_project/7.png)
+
+![Other games](images_project/8.png)
