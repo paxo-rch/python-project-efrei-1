@@ -47,10 +47,9 @@ This project is a text-based and GUI-based adventure game inspired by the French
 1. **Clone the Git Repository:**
 
     ```bash
-    git clone <repository_url>
+    git clone https://github.com/paxo-rch/python-project-efrei-1
     ```
 
-    Replace `<repository_url>` with the actual URL of your project's Git repository.
 2. **Set up the Development Environment:**
 
     *   **Python:** Ensure you have Python 3.x installed.
