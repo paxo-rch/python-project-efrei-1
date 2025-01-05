@@ -1,4 +1,8 @@
+# Mainly used to move the clouds (animation)
+# Author: Jules
+
 import graphics.objects as obj
+
 def nuage_forward(w,c=None):
 
     #initialize the list containing the cloud objects (nuages for the left and nuages1 for the right)

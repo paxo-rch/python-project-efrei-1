@@ -1,3 +1,6 @@
+# This is the main file for the logical challenges
+# Author: Gabriel
+
 # Function to display the remaining sticks
 def display_sticks(n):
     """Displays the remaining sticks visually.

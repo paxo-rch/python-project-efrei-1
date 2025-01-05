@@ -1,6 +1,13 @@
+# This is the main file for the chance challengess
+# Author: Gabriel
+
 import random
 from Utils import *
-"""def shell_game():
+
+def shell_game():
+    # Function to simulate a shell game, where the player has to guess the correct shell where the coin is hidden.
+    # Parameters: None
+    # Returns: True if the player wins, False if the player loses.
     shell = ['A','B','C']
     attempt = 0
 
@@ -76,9 +83,8 @@ def chance_challenge():
     # Randomly choose a game to play.
     challenge =  random.choice(functions)
     return challenge()
-"""
 
-############# With interface version
+############# With interface version (we overwrite the functions)
 
 from graphics.objects import *
 import math
@@ -283,6 +289,8 @@ def chance_challenge(player):
     # Presents a graphical interface for selecting and playing a random mini-game.
     # Parameters: None
     # Returns: None. This function manages the game flow and doesn't directly return a meaningful value.
+
+    # Initialize the gui
     win = Win()
     win.loadImage("parchemin.jpg")
 
@@ -290,12 +298,12 @@ def chance_challenge(player):
     title.alignment = CENTER
     win.add(title)
 
-    title2 = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "You won a key!\nDo you want to exit or play again ?")
+    title2 = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "You won a key!\nDo you want to exit ?")  # we create the different titles (one at a time will be visible)
     title2.alignment = CENTER
     title2.hide = True
     win.add(title2)
 
-    title3 = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "You lost the game, \ndo you want to exit or play again ?")
+    title3 = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "You lost the game, \ndo you want to exit ?")
     title3.alignment = CENTER
     title3.hide = True
     win.add(title3)
@@ -314,26 +322,33 @@ def chance_challenge(player):
 
     loop1 = True
     def global_exit():
-            nonlocal loop1
-            # Sets flags to exit both loops.
-            if loop1:
-                loop1 = False
-                nuage_forward(win)
+        # Parameters: None
+        # Returns: None     // this is just an event function
+        nonlocal loop1
+        # Sets flags to exit both loops.
+        if loop1:
+            loop1 = False
+            nuage_forward(win)
             
             
-    exit.onclick = global_exit
+    exit.onclick = global_exit  # set the event function for the exit button
 
     def btn_click():
+        # Parameters: None
+        # Returns: None     // this is just an event function
         global result
         # Select and play a random challenge.
         win.destroy(button)
+
         functions = [shell_game,roll_dice_game]
         challenge =  random.choice(functions)
+
         # Show appropriate messages and buttons based on the game result.
         title.hide = True
         button.hide = True
         result = challenge()
         exit.hide = False
+
         if(result):
             title2.hide = False
             title3.hide = True
@@ -344,8 +359,7 @@ def chance_challenge(player):
 
     button.onclick = btn_click
 
-
-    while True:
+    while True:  # main loop
         if not loop1:
             if result:
                 return player

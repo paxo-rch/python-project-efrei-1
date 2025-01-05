@@ -1,3 +1,6 @@
+# This is the main file for the pere fouras challenge
+# Authors: Jules for the no-gui part, Gabriel for the gui
+
 import json
 import random
 
