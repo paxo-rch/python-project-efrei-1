@@ -276,8 +276,7 @@ def tictactoe_game():
 from graphics.objects import *  # This import is likely from a custom graphics library
 import math
 from time import *
-import points  # This import is likely from a custom library
-
+from Utils import *
 def master_removal(n):
     """Master removal function for the graphical Nim game.
 
@@ -297,7 +296,7 @@ def master_removal(n):
 
     return rm
 
-def nim_game():
+def nim_game(player):
     """Plays the Nim game with a graphical interface."""
     n = 20
     who = True
@@ -333,7 +332,7 @@ def nim_game():
     btn_3.alignment = CENTER
     btn_3.loadImage("small_paper.png")
     win.add(btn_3)
-
+    nuage_backward(win)
     def move_stick(nb, who):
         """Animates the movement of the sticks.
 
@@ -390,11 +389,40 @@ def nim_game():
 
 
     if(who):
-        points.register_points("logical_challenge", 1)
-        print("The game master removed the last stick. The player wins!")
+        winner(who)
+        return player
     else:
-        print("The player removed the last stick. The game master wins!")
+        winner(who)
+        return 0
 
-    return who  # True if player wins
+def winner(who):
+    w = Win()
+    w.loadImage("parchemin.jpg")
+    title2 = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "You won a key!\nDo you want to exit or play again ?")
+    title2.alignment = CENTER
+    title2.hide = True
+    w.add(title2)
 
-nim_game()
+    title3 = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "You lost the game, \ndo you want to exit or play again ?")
+    title3.alignment = CENTER
+    title3.hide = True
+    w.add(title3)
+
+    exit = Label(WIN_WIDTH/8, WIN_HEIGHT/2, WIN_WIDTH/4, WIN_WIDTH/8, "Exit")
+    exit.alignment = CENTER
+    exit.loadImage("small_paper.png")
+    w.add(exit)
+    if(who):
+        title2.hide = False
+    else:
+        title3.hide = False
+    loop1 = True
+    def exit_listener():
+        nonlocal loop1
+        if loop1:
+            loop1 = False
+            nuage_forward(w)
+    exit.onclick = exit_listener
+    while loop1:
+        w.updateAll()
+nim_game(1)

@@ -83,7 +83,6 @@ def chance_challenge():
 from graphics.objects import *
 import math
 from time import *
-import points
 
 
 
