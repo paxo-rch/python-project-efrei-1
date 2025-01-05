@@ -212,16 +212,16 @@ Here's a simplified overview of the functions, grouped by file. Details about pa
 
 ### Project Chronology
 
-*   **2023-11-27:** Project, repository creation, initial file structure setup, implementation of the start menu and introduction sequence.
-*   **2023-11-28:** Development of core game logic, including player count selection and team composition. Implemented basic challenge selection menu.
-*   **2023-11-29:** Work on the first versions of the math and logic challenges. Integration of the Pere Fouras riddle challenge.
-*   **2023-11-30:** Implementation of chance challenges. Development of the initial version of the final challenge.
-*   **2023-12-01:** Introduction of the GUI using Pygame for math and logic challenges. Started work on enhancing the user interface.
-*   **2023-12-02:** Continued development of the GUI for chance challenges and the final challenge. Refinement of game aesthetics.
-*   **2023-12-03:** Implementation of cloud animation for transitions between game screens.
-*   **2023-12-04:** Finalization of the GUI for all challenges. Bug fixes and improvements to user interaction.
-*   **2023-12-05:** Code optimization and final touches to the user interface.
-*   **2023-12-06:** Final review, writing of documentation, and project submission.
+*   Project, repository creation, initial file structure setup, implementation of the different sub-projects in terminal mode
+*   Work on the first versions of the math and logic challenges. Integration of the Pere Fouras riddle challenge.
+*   Implementation of chance challenges. Development of the initial version of the final challenge.
+*   Introduction of the GUI using Pygame for math and logic challenges. Started work on enhancing the user interface.
+*   Continued development of the GUI for chance challenges and the final challenge. Refinement of game aesthetics.
+*   Implementation of cloud animation for transitions between game screens.
+*   Development of core game logic, including player count selection and team composition. Implemented basic challenge selection menu.
+*   Finalization of the GUI for all challenges. Bug fixes and improvements to user interaction.
+*   Code optimization and final touches to the user interface.
+*   Final review, writing of documentation, and project submission.
 
 **Decisions Made:**
 
@@ -236,10 +236,12 @@ Here's a simplified overview of the functions, grouped by file. Details about pa
 ### Task Distribution
 
 *   **Gabriel:**
+    *   Development of the whole GUI module
     *   Implementation of the GUI for most challenges.
-    *   Development of the cloud animation.
-    *   Design and implementation of the Pere Fouras riddle challenge with GUI.
+    *   Design and implementation of some challenges with GUI.
+    *   Creation of utility functions and overall code organization.
 *   **Jules:**
+    *   Development of the cloud animation.
     *   Development of the initial game structure and core logic.
     *   Implementation of the math challenges, both console-based and GUI versions.
     *   Design and implementation of the final challenge.
@@ -252,8 +254,8 @@ Here's a simplified overview of the functions, grouped by file. Details about pa
 *   **Unit Tests:** Individual functions were tested during development to ensure they work correctly in isolation (e.g., `Factorial`, `is_prime`, `nearest_prime`).
 *   **Integration Tests:** Challenges were tested together to ensure they integrate correctly with the main game loop and player data.
 *   **Gameplay Tests:** The entire game was played multiple times to test the flow, challenge selection, key collection, and final challenge.
-*   **Input Validation Tests:**  Various inputs were tested to ensure the game handles them correctly (e.g., valid numbers, invalid numbers, empty strings).
-*   **GUI Tests:** The GUI was tested to ensure buttons, input fields, and labels work as expected and the layout is correct.
+*   **Input Validation Tests:**  Various inputs were tested to ensure the game handles them correctly.
+*   **GUI Tests:** The GUI was tested to ensure buttons, input fields, and labels work as expected and the layout is correct (after some bug fixes).
 
 ### Specific Test Cases and Results
 
