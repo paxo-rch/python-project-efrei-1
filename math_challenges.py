@@ -385,62 +385,47 @@ def factorial_challenge():
     continuer_text = obj.Label(0, 0, 200, 100, "Continue")
     button_continuer.add(continuer_text)
     w.add(button_continuer)
-    # Set a variable to know the number of the player's answer
-    counter = 0
-    # Create a box to contain the player's answer
-    counter_box = obj.Box(obj.WIN_WIDTH/3, obj.WIN_HEIGHT/2, 400, 200)
-    counter_box.hide_bg = True
-    counter_box.borderWidth = 5
-    counter_box.radius = 10
-    w.add(counter_box)
-    # Create a label to display the player's answer
-    number_text = obj.Label(counter_box.x+counter_box.w/2, counter_box.y+counter_box.h/2, 0, 0, "0")
-    w.add(number_text)
-    # Create a button to increment the answer
-    plus_box = obj.Box(counter_box.x+counter_box.w/1.5, counter_box.y+counter_box.h/3.25, 100, 100)
-    plus_box.hide_bg = True
-    plus_box.borderWidth = 5
-    plus_box.radius = 10
-    w.add(plus_box)
-    # Create a label to display the '+' symbol
-    plus_text = obj.Label(counter_box.x+counter_box.w/1.25, counter_box.y+counter_box.h/1.75, 0, 0, "+")
-    w.add(plus_text)
-    # Create a button to decrement the answer
-    minus_box = obj.Box(counter_box.x+counter_box.w/8, counter_box.y+counter_box.h/3.25, 100, 100)
-    minus_box.hide_bg = True
-    minus_box.borderWidth = 5
-    minus_box.radius = 10
-    w.add(minus_box)
-    # Create a label to display the '-' symbol
-    minus_text = obj.Label(counter_box.x+counter_box.w/4, counter_box.y+counter_box.h/1.75, 0, 0, "-")
-    w.add(minus_text)
-    # Define the function to increment the answer
-    def CounterListenerPlus():
-            nonlocal number_text, counter
-            counter += 1
-            number_text.text = str(counter)
-    # Define the function to decrement the answer
-    def CounterListenerMinus():
-        nonlocal number_text, counter
-        if counter > 0:
-            counter -= 1
-            number_text.text = str(counter)
-    # Define the function of the button to continue
+
+    box_factorial = obj.Box(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/2, 600, 100)
+    box_factorial.hide_bg = True
+    box_factorial.borderWidth = 5
+    box_factorial.radius = 10
+    w.add(box_factorial)
+    factorial_text = obj.Label(obj.WIN_WIDTH/1.35, obj.WIN_HEIGHT/1.75, 0, 0, "")
+    w.add(factorial_text)
+    factorial_hover = False
+    def keyboard_listener():
+            for key in range(len(obj.Object.keys)):
+                        value = obj.Object.keys[key]
+                        if value:
+                            if pygame.key.name(key) in ["1","2","3","4","5","6","7","8","9","0"]:
+                                if factorial_hover:
+                                    factorial_text.text += pygame.key.name(key)
+                            elif pygame.key.name(key) == "backspace":
+                                if factorial_hover:
+                                    factorial_text.text = factorial_text.text[:-1]
+
+                            break
+    def factorial_listener():
+        nonlocal factorial_hover
+        if factorial_hover:
+            factorial_hover = False
+        else:
+            factorial_hover = True
+
     def button_listener():
         nonlocal continuer
         if continuer:
             continuer = False
-    # Set a variable to know when to continue
+
+    obj.Object.onkeyboard = keyboard_listener
     continuer = True
-    # Assign the function to their button
-    plus_box.onclick = CounterListenerPlus
-    minus_box.onclick = CounterListenerMinus
+    box_factorial.onclick = factorial_listener
     button_continuer.onclick = button_listener
     # Wait until the player does not continue
     while continuer:
         w.updateAll()
-    # Verify if the answer is correct
-    if counter == factorial:
+    if int(factorial_text.text) == factorial:
         return True
     return False
 
@@ -610,8 +595,8 @@ def math_challenge(player):
     button.alignment = CENTER
     button.loadImage("small_paper.png")
     win.add(button)
-    # Add a button to quit
-    exit = Label(WIN_WIDTH/8, WIN_HEIGHT/2, WIN_WIDTH/4, WIN_WIDTH/8, "Exit")
+
+    exit = Label(WIN_WIDTH/2.7, WIN_HEIGHT/2, WIN_WIDTH/4, WIN_WIDTH/8, "Exit")
     exit.alignment = CENTER
     exit.loadImage("small_paper.png")
     exit.hide = True
