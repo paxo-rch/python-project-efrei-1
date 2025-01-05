@@ -31,6 +31,11 @@ import graphics.objects as obj
 from Utils import *
 import pygame
 def final_challenge(players):
+    """
+    show the final challenge when the players have 3 keys in total
+    args: players (the list of players and their attributes)
+    returns: None (quit the game)
+    """
     w = obj.Win()
     w.loadImage(parchemin)
     title = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/6, 20, 20, "The Final Challenge")

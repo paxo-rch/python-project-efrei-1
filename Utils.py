@@ -11,6 +11,11 @@ img = "resources/images/img.png"
 cupimg = "resources/images/cup.png"
 import graphics.objects as obj
 def history(text):
+    """
+    Write the text in the history file
+    args: text (the text to write)
+    return: None
+    """
     try:
         with open("output/history.txt", "a") as f:
             f.write(str(text)+"\n")
@@ -19,7 +24,11 @@ def history(text):
             f.write(str(text)+"\n")
 
 def nuage_forward(w,c=None):
-
+    """
+    Function to create and move the clouds forward
+    args: w (the window object)
+    return: None
+    """
     #initialize the list containing the cloud objects (nuages for the left and nuages1 for the right)
     nuages = []
     nuages1 = []
@@ -74,7 +83,11 @@ def nuage_forward(w,c=None):
 Function that moves the clouds backward
 """
 def nuage_backward(w):
-
+    """
+    Function to create and move the clouds backward
+    args: w (the window object)
+    return: None
+    """
     nuages = []
     nuages1 = []
     #create a box to contain the clouds
