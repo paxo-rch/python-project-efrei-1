@@ -34,16 +34,14 @@ from graphics.objects import *  # This import is likely from a custom graphics l
 import math
 from time import *
 from Utils import *
-import points  # This import is likely from a custom library
 
 from the_pere_fouras_challenge import load_riddles
 import random
 from graphics.objects import *
 from time import *
-import points
 from Utils import *
 
-def pere_fouras_riddles():
+def pere_fouras_riddles(player):
     # Loads riddles from a JSON file.
     riddles = load_riddles("PFRiddles.json")
     # Selects a random riddle of type "Key".
@@ -134,6 +132,9 @@ def pere_fouras_riddles():
 
     sleep(2)
     nuage_forward(win)
-    return result
+    if result:
+        return player
+    else:
+        return 0
 
-pere_fouras_riddles()
+pere_fouras_riddles(1)
