@@ -199,52 +199,44 @@ def factorial_challenge():
     continuer_text = obj.Label(0, 0, 200, 100, "Continue")
     button_continuer.add(continuer_text)
     w.add(button_continuer)
-    counter = 0
-    counter_box = obj.Box(obj.WIN_WIDTH/3, obj.WIN_HEIGHT/2, 400, 200)
-    counter_box.hide_bg = True
-    counter_box.borderWidth = 5
-    counter_box.radius = 10
-    w.add(counter_box)
-    number_text = obj.Label(counter_box.x+counter_box.w/2, counter_box.y+counter_box.h/2, 0, 0, "0")
-    w.add(number_text)
-    plus_box = obj.Box(counter_box.x+counter_box.w/1.5, counter_box.y+counter_box.h/3.25, 100, 100)
-    plus_box.hide_bg = True
-    plus_box.borderWidth = 5
-    plus_box.radius = 10
-    w.add(plus_box)
-    plus_text = obj.Label(counter_box.x+counter_box.w/1.25, counter_box.y+counter_box.h/1.75, 0, 0, "+")
-    w.add(plus_text)
-    minus_box = obj.Box(counter_box.x+counter_box.w/8, counter_box.y+counter_box.h/3.25, 100, 100)
-    minus_box.hide_bg = True
-    minus_box.borderWidth = 5
-    minus_box.radius = 10
-    w.add(minus_box)
-    minus_text = obj.Label(counter_box.x+counter_box.w/4, counter_box.y+counter_box.h/1.75, 0, 0, "-")
-    w.add(minus_text)
-    def CounterListenerPlus():
-            nonlocal number_text, counter
-            counter += 1
-            number_text.text = str(counter)
+    box_factorial = obj.Box(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/2, 600, 100)
+    box_factorial.hide_bg = True
+    box_factorial.borderWidth = 5
+    box_factorial.radius = 10
+    w.add(box_factorial)
+    factorial_text = obj.Label(obj.WIN_WIDTH/1.35, obj.WIN_HEIGHT/1.75, 0, 0, "")
+    w.add(factorial_text)
+    factorial_hover = False
+    def keyboard_listener():
+            for key in range(len(obj.Object.keys)):
+                        value = obj.Object.keys[key]
+                        if value:
+                            if pygame.key.name(key) in ["1","2","3","4","5","6","7","8","9","0"]:
+                                if factorial_hover:
+                                    factorial_text.text += pygame.key.name(key)
+                            elif pygame.key.name(key) == "backspace":
+                                if factorial_hover:
+                                    factorial_text.text = factorial_text.text[:-1]
 
-    def CounterListenerMinus():
-        nonlocal number_text, counter
-        if counter > 0:
-
-            counter -= 1
-            number_text.text = str(counter)
-
+                            break
+    def factorial_listener():
+        nonlocal factorial_hover
+        if factorial_hover:
+            factorial_hover = False
+        else:
+            factorial_hover = True
     def button_listener():
         nonlocal continuer
         if continuer:
             continuer = False
-
+        
+    obj.Object.onkeyboard = keyboard_listener
     continuer = True
-    plus_box.onclick = CounterListenerPlus
-    minus_box.onclick = CounterListenerMinus
+    box_factorial.onclick = factorial_listener
     button_continuer.onclick = button_listener
     while continuer:
         w.updateAll()
-    if counter == factorial:
+    if int(factorial_text.text) == factorial:
         return True
     return False
 def is_prime(n):
@@ -356,7 +348,7 @@ def math_challenge(player):
     button.loadImage("small_paper.png")
     win.add(button)
 
-    exit = Label(WIN_WIDTH/8, WIN_HEIGHT/2, WIN_WIDTH/4, WIN_WIDTH/8, "Exit")
+    exit = Label(WIN_WIDTH/2.7, WIN_HEIGHT/2, WIN_WIDTH/4, WIN_WIDTH/8, "Exit")
     exit.alignment = CENTER
     exit.loadImage("small_paper.png")
     exit.hide = True

@@ -6,6 +6,7 @@ import chance_challenges
 import math_challenges
 import logical_challenges
 from Utils import *
+import final_challenge
 
 
 def StartMenufunc():
@@ -416,18 +417,36 @@ def PlayerChoice(game):
             if game == "luck":
                 key_player = chance_challenges.chance_challenge(counter)
                 if key_player != 0:
-                    players[key_player-1]["key"] += 1
-                ChallengeMenu()
+                    players[key_player-1]["keys"] += 1
+                nbr_key = 0
+                for i in players:
+                    nbr_key += i["keys"]
+                if nbr_key >= 3:
+                    final_challenge.final_challenge(players)
+                else:
+                    ChallengeMenu()
             elif game == "math":
                 key_player = math_challenges.math_challenge(counter)
                 if key_player != 0:
-                    players[key_player-1]["key"] += 1
-                ChallengeMenu()
+                    players[key_player-1]["keys"] += 1
+                nbr_key = 0
+                for i in players:
+                    nbr_key += i["keys"]
+                if nbr_key >= 3:
+                    final_challenge.final_challenge(players)
+                else:
+                    ChallengeMenu()
             elif game == "logical":
                 key_player = logical_challenges.nim_game(counter)
                 if key_player != 0:
-                    players[key_player-1]["key"] += 1
-                ChallengeMenu()
+                    players[key_player-1]["keys"] += 1
+                nbr_key = 0
+                for i in players:
+                    nbr_key += i["keys"]
+                if nbr_key >= 3:
+                    final_challenge.final_challenge(players)
+                else:
+                    ChallengeMenu()
 
     continuer = True
     plus_box.onclick = CounterListenerPlus

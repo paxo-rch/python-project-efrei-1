@@ -398,7 +398,7 @@ def nim_game(player):
 def winner(who):
     w = Win()
     w.loadImage("parchemin.jpg")
-    title2 = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "You won a key!\nDo you want to exit or play again ?")
+    title2 = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "You won the game!\nDo you want to exit or play again ?")
     title2.alignment = CENTER
     title2.hide = True
     w.add(title2)
@@ -425,4 +425,3 @@ def winner(who):
     exit.onclick = exit_listener
     while loop1:
         w.updateAll()
-nim_game(1)
