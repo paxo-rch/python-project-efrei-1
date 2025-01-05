@@ -14,7 +14,12 @@ import the_pere_fouras_challenge
 
 
 def StartMenufunc():
-
+    """
+    Initialize the start menu and calls the introduction function
+    when space is pressed
+    args: None
+    return: None
+    """
     #set the window name
     pygame.display.set_caption('Fort Boyard Client v1.0')
     #set the window icon
@@ -70,7 +75,12 @@ def StartMenufunc():
 
 
 def Introduction():
-
+    """
+    Introduce the game to the player calls th player count function
+    after the intro is done
+    args: None
+    return: None
+    """
     w = obj.Win()
     Intro_Skiped = False
     text_done = False
@@ -120,6 +130,12 @@ def Introduction():
 
 
 def PlayerCount():
+    """
+    Allows the player to choose the number of players
+    calls compose_equipe function after continue button is pressed
+    args: None
+    return: None
+    """
     global counter
     w = obj.Win()
     w.loadImage(parchemin)
@@ -192,6 +208,11 @@ def PlayerCount():
         w.updateAll()
 
 def Compose_Equipe(nbr):
+    """
+    Allows the player to choose the name and profession of each player and if they are the leader calls the Challenge menu after the players have been selected
+    args: nbr (the number of players)
+    return: None
+    """
     global players
     nbr_joueurs = nbr+1
     players = []
@@ -302,6 +323,14 @@ def Compose_Equipe(nbr):
     nuage_forward(w)
     ChallengeMenu()
 def ChallengeMenu():
+    """
+    Allows the player to choose the challenge
+    calls math_challenge function after math button is pressed
+    calls logic_challenge function after logic button is pressed
+    calls perefourras_challenge function after perefourras button is pressed
+    args: None
+    returns: None
+    """
     w = obj.Win()
     w.loadImage(parchemin)
     texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/4, 0, 0, "Choose the challenge")
@@ -373,7 +402,11 @@ def ChallengeMenu():
     while True:
         w.updateAll()
 def PlayerChoice(game):
-
+    """"
+    Allow the player to choose which player will play the challenge
+    args: game (the name of the challenge selected in challenge menu)
+    returns: None
+    """
     w = obj.Win()
     w.loadImage(parchemin)
     button_continuer = obj.Box(obj.WIN_WIDTH/1.3, obj.WIN_HEIGHT/1.25, 200, 100)
