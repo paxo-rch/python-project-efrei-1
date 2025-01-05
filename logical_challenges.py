@@ -305,7 +305,7 @@ def nim_game(player):
     who = True
 
     win = Win()
-    win.loadImage("parchemin.jpg")
+    win.loadImage(parchemin)
     win.add(Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "Nim game"))
 
     text = Label(WIN_WIDTH/2, WIN_HEIGHT/3, 20, 20, "The goal is to not remove the last stick. You can remove 1, 2 or 3 sticks.")
@@ -316,24 +316,24 @@ def nim_game(player):
 
     for i in range(n):
         stick = Box(WIN_WIDTH/2 - 40 * n / 2 + i*40, WIN_HEIGHT/2, 20, 100)
-        stick.loadImage("stick.png")
+        stick.loadImage(stickimg)
         stick.transparent = True
         win.add(stick)
         sticks.append(stick)
 
     btn_1 = Label(WIN_WIDTH/2 - 90, WIN_HEIGHT - 120, 60, 100, "1")
     btn_1.alignment = CENTER
-    btn_1.loadImage("small_paper.png")
+    btn_1.loadImage(small_paper)
     win.add(btn_1)
 
     btn_2 = Label(WIN_WIDTH/2 - 10, WIN_HEIGHT - 120, 60, 100, "2")
     btn_2.alignment = CENTER
-    btn_2.loadImage("small_paper.png")
+    btn_2.loadImage(small_paper)
     win.add(btn_2)
 
     btn_3 = Label(WIN_WIDTH/2 + 70, WIN_HEIGHT - 120, 60, 100, "3")
     btn_3.alignment = CENTER
-    btn_3.loadImage("small_paper.png")
+    btn_3.loadImage(small_paper)
     win.add(btn_3)
     nuage_backward(win)
     def move_stick(nb, who):
@@ -400,7 +400,7 @@ def nim_game(player):
 
 def winner(who):
     w = Win()
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
     title2 = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "You won the game!\nDo you want to exit or play again ?")
     title2.alignment = CENTER
     title2.hide = True
@@ -413,7 +413,7 @@ def winner(who):
 
     exit = Label(WIN_WIDTH/2.7, WIN_HEIGHT/2, WIN_WIDTH/4, WIN_WIDTH/8, "Exit")
     exit.alignment = CENTER
-    exit.loadImage("small_paper.png")
+    exit.loadImage(small_paper)
     w.add(exit)
     if(who):
         title2.hide = False

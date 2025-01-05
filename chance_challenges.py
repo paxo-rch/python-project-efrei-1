@@ -97,7 +97,7 @@ def shell_game():
     # Parameters: None
     # Returns: True if the player guesses correctly, False otherwise.
     win = Win()
-    win.loadImage("parchemin.jpg")
+    win.loadImage(parchemin)
 
     title = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "Welcome to the shell game\nYou will have to guess the correct shell in which the coin is hidden\nYou have 2 attempts\n Good Luck!")
     title.alignment = CENTER
@@ -115,7 +115,7 @@ def shell_game():
     for i in range(3):
         cup = Box(WIN_WIDTH/4 + 200*i, WIN_HEIGHT/2, 200, 200)
         cups_pos_goal.append([[cup.x,cup.y],[cup.x,cup.y],0])
-        cup.loadImage("cup.png")
+        cup.loadImage(cupimg)
         cup.transparent = True
         win.add(cup)
         cups.append(cup)
@@ -210,7 +210,7 @@ def roll_dice_game():
     # Parameters: None
     # Returns: True if the player rolls a 6, False otherwise.
     win = Win()
-    win.loadImage("parchemin.jpg")
+    win.loadImage(parchemin)
 
     title = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "Roll the dice game")
     title.alignment = CENTER
@@ -234,13 +234,13 @@ def roll_dice_game():
     win.add(roll)
 
     arrow = Box(WIN_WIDTH/2-135, WIN_HEIGHT/2+30, 40, 40)
-    arrow.loadImage("arrow.png")
+    arrow.loadImage(arrowimg)
     arrow.transparent = True
     win.add(arrow)
 
     button = Label(WIN_WIDTH/3, WIN_HEIGHT/1.5, WIN_WIDTH/3, WIN_WIDTH/8, "Roll the dice")
     button.alignment = CENTER
-    button.loadImage("small_paper.png")
+    button.loadImage(small_paper)
     win.add(button)
     def roll_dice():
         # Simulates the rolling of the dice with animation.
@@ -292,7 +292,7 @@ def chance_challenge(player):
 
     # Initialize the gui
     win = Win()
-    win.loadImage("parchemin.jpg")
+    win.loadImage(parchemin)
 
     title = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "Chance Challenge")
     title.alignment = CENTER
@@ -310,12 +310,12 @@ def chance_challenge(player):
 
     button = Label(WIN_WIDTH/3, WIN_HEIGHT/2, WIN_WIDTH/3, WIN_WIDTH/8, "Choose a random \nchallenge")
     button.alignment = CENTER
-    button.loadImage("small_paper.png")
+    button.loadImage(small_paper)
     win.add(button)
 
     exit = Label(WIN_WIDTH/2.7, WIN_HEIGHT/2, WIN_WIDTH/4, WIN_WIDTH/8, "Exit")
     exit.alignment = CENTER
-    exit.loadImage("small_paper.png")
+    exit.loadImage(small_paper)
     exit.hide = True
     win.add(exit)
     nuage_backward(win)

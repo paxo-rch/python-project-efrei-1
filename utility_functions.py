@@ -18,10 +18,10 @@ def StartMenufunc():
     #set the window name
     pygame.display.set_caption('Fort Boyard Client v1.0')
     #set the window icon
-    programIcon = pygame.image.load('titrefort.png')
+    programIcon = pygame.image.load(titre_fort)
     pygame.display.set_icon(programIcon)
     w = obj.Win()
-    video = Video("genrique.mp4")
+    video = Video("resources/video/genrique.mp4")
     video.play(True)
     #hide the main window background
     w.hide_bg = True
@@ -30,7 +30,7 @@ def StartMenufunc():
     #hide the box
     text.transparent = True
     #load the image	
-    text.loadImage("parchemin_menu.png")
+    text.loadImage(parchemin_menu)
     #add the PRESS SPACE TO PLAY box to the window
     w.add(text)
     #create a box for the title
@@ -38,7 +38,7 @@ def StartMenufunc():
     #hide the box
     titlebox.transparent = True
     #load the image
-    titlebox.loadImage("titrefort.png")
+    titlebox.loadImage(titre_fort)
     w.add(titlebox)
     animation = True
     def KeyboardListener():
@@ -57,7 +57,7 @@ def StartMenufunc():
         video.draw_to(obj.gui, (0, 0))
         if time.time() % 1 > 0.5:
 
-            text.loadImage("parchemin_menu.png")
+            text.loadImage(parchemin_menu)
         else:
 
             text.unloadImage()
@@ -81,7 +81,7 @@ def Introduction():
     skip_text = obj.Label(0, 0, 200, 100, "Skip")
     button_skip.add(skip_text)
     w.add(button_skip)
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
 
     def button_listener():
 
@@ -122,7 +122,7 @@ def Introduction():
 def PlayerCount():
     global counter
     w = obj.Win()
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
     button_continuer = obj.Box(obj.WIN_WIDTH/1.3, obj.WIN_HEIGHT/1.25, 200, 100)
     button_continuer.borderWidth = 5
     button_continuer.radius = 10
@@ -196,7 +196,7 @@ def Compose_Equipe(nbr):
     nbr_joueurs = nbr+1
     players = []
     w = obj.Win()
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
     texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Enter player 1 informations")
     w.add(texte)
     box_name = obj.Box(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/2, 600, 100)
@@ -303,7 +303,7 @@ def Compose_Equipe(nbr):
     ChallengeMenu()
 def ChallengeMenu():
     w = obj.Win()
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
     texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/4, 0, 0, "Choose the challenge")
     w.add(texte)
     math_button = obj.Box(obj.WIN_WIDTH/2.3, obj.WIN_HEIGHT/3, 200, 100)
@@ -375,7 +375,7 @@ def ChallengeMenu():
 def PlayerChoice(game):
 
     w = obj.Win()
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
     button_continuer = obj.Box(obj.WIN_WIDTH/1.3, obj.WIN_HEIGHT/1.25, 200, 100)
     button_continuer.borderWidth = 5
     button_continuer.radius = 10

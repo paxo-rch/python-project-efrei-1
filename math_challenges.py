@@ -225,7 +225,7 @@ def equation_challenge():
     """
     # Create a window
     w = obj.Win()
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
     # Generate a random equation
     a,b,c = solve_linear_equation()
     # Display a title with the equation
@@ -368,7 +368,7 @@ def factorial_challenge():
     """
     # Create a new window
     w = obj.Win()
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
     # Generate a random number
     n = random.randint(1,10)
     # Calculate the factorial for verification
@@ -484,7 +484,7 @@ def prime_challenge():
     """
     # Create a new window
     w = obj.Win()
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
     # Generate a random number
     n = random.randint(10,20)
     # Calculate the nearest prime for verification
@@ -575,7 +575,7 @@ def math_challenge(player):
     """
     # Create a new window
     win = Win()
-    win.loadImage("parchemin.jpg")
+    win.loadImage(parchemin)
     # Add a title
     title = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "Maths Challenge")
     title.alignment = CENTER
@@ -593,12 +593,12 @@ def math_challenge(player):
     # Add a button to select the math challenge
     button = Label(WIN_WIDTH/3, WIN_HEIGHT/2, WIN_WIDTH/3, WIN_WIDTH/8, "Choose a random \nchallenge")
     button.alignment = CENTER
-    button.loadImage("small_paper.png")
+    button.loadImage(small_paper)
     win.add(button)
 
     exit = Label(WIN_WIDTH/2.7, WIN_HEIGHT/2, WIN_WIDTH/4, WIN_WIDTH/8, "Exit")
     exit.alignment = CENTER
-    exit.loadImage("small_paper.png")
+    exit.loadImage(small_paper)
     exit.hide = True
     win.add(exit)
     # Make the background animation

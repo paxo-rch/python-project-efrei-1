@@ -53,7 +53,7 @@ def pere_fouras_riddles(player):
     game_over = False
 
     win = Win()
-    win.loadImage("parchemin.jpg")
+    win.loadImage(parchemin)
 
     title = Label(WIN_WIDTH/2, WIN_HEIGHT/4, 20, 20, "Pere Fouras Challenge")
     title.alignment = CENTER

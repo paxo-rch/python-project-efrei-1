@@ -32,7 +32,7 @@ from Utils import *
 import pygame
 def final_challenge(players):
     w = obj.Win()
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
     title = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/6, 20, 20, "The Final Challenge")
     title.alignment = obj.CENTER
     w.add(title)
@@ -111,7 +111,7 @@ def final_challenge(players):
         w.updateAll()
 def winner(who,players):
     w = obj.Win()
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
     title2 = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/4, 20, 20, "You won the game!")
     title2.alignment = obj.CENTER
     title2.hide = True
@@ -124,7 +124,7 @@ def winner(who,players):
 
     exit = obj.Label(obj.WIN_WIDTH/2.7, obj.WIN_HEIGHT/1.3, obj.WIN_WIDTH/4, obj.WIN_WIDTH/8, "Exit")
     exit.alignment = obj.CENTER
-    exit.loadImage("small_paper.png")
+    exit.loadImage(small_paper)
     w.add(exit)
     scores = obj.Grid(obj.WIN_WIDTH/8, obj.WIN_HEIGHT/3, 1000, 200)
     tab = []
