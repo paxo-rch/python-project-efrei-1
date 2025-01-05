@@ -1,3 +1,6 @@
+# Includes all functions used in the game to manage the menu the calls of the sub games
+# Author: Jules
+
 import graphics.objects as obj
 import pygame
 import time

@@ -1,5 +1,9 @@
+# This is the main file for the treasure room challenge
+# Author: Jules
+
 from the_pere_fouras_challenge import load_riddles
 import random
+
 def treasure_room():
     tv_game = load_riddles("TRClues.json")
     year = random.choice(list(tv_game["Fort Boyard"].keys()))
