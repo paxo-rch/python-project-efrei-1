@@ -48,6 +48,7 @@ def StartMenufunc():
             nuage_forward(w,video)
             video.stop()
             video.release()
+            history("Started Game")
             Introduction()
     #set the keyboard listener
     obj.Object.onkeyboard = KeyboardListener
@@ -86,11 +87,12 @@ def Introduction():
 
         nonlocal Intro_Skiped, text_done
         if skip_text.text == "Skip":
-
+            history("Skipped Introduction")
             Intro_Skiped = True
         if text_done:
 
             text_done = False
+            history("Finished introduction")
             nuage_forward(w)
             PlayerCount()
     button_skip.onclick = button_listener
@@ -178,6 +180,7 @@ def PlayerCount():
 
             continuer = False
             nuage_forward(w)
+            history("Selected " + str(counter) + " players")
             Compose_Equipe(counter)
 
     continuer = True
@@ -273,6 +276,7 @@ def Compose_Equipe(nbr):
         nonlocal nbr, leader
         nbr -= 1
         players.append({"name":name_text.text,"profession":profession_text.text,"leader":leader,"keys":0})
+        history({"name":name_text.text,"profession":profession_text.text,"leader":leader,"keys":0})
         if nbr > 0:
             name_text.text = ""
             profession_text.text = ""
@@ -339,24 +343,28 @@ def ChallengeMenu():
         if animation:
             animation = False
             nuage_forward(w)
+            history("Selected gambling challenge")
             PlayerChoice("luck")
     def math_listener():
         nonlocal animation
         if animation:
             animation = False
             nuage_forward(w)
+            history("Selected math challenge")
             PlayerChoice("math")
     def logic_listener():
         nonlocal animation
         if animation:
             animation = False
             nuage_forward(w)
+            history("Selected logic challenge")
             PlayerChoice("logical")
     def perefourras_listener():
         nonlocal animation
         if animation:
             animation = False
             nuage_forward(w)
+            history("Selected riddle challenge")
             PlayerChoice("riddles")
     math_button.onclick = math_listener
     chance_button.onclick = chance_listener
@@ -428,44 +436,52 @@ def PlayerChoice(game):
             if game == "luck":
                 key_player = chance_challenges.chance_challenge(count)
                 if key_player != 0:
+                    history("Player " + str(key_player) + " got a key")
                     players[key_player-1]["keys"] += 1
                 nbr_key = 0
                 for i in players:
                     nbr_key += i["keys"]
                 if nbr_key >= 3:
+                    history("Started final challenge")
                     final_challenge.final_challenge(players)
                 else:
                     ChallengeMenu()
             elif game == "math":
                 key_player = math_challenges.math_challenge(count)
                 if key_player != 0:
+                    history("Player " + str(key_player) + " got a key")
                     players[key_player-1]["keys"] += 1
                 nbr_key = 0
                 for i in players:
                     nbr_key += i["keys"]
                 if nbr_key >= 3:
+                    history("Started final challenge")
                     final_challenge.final_challenge(players)
                 else:
                     ChallengeMenu()
             elif game == "logical":
                 key_player = logical_challenges.nim_game(count)
                 if key_player != 0:
+                    history("Player " + str(key_player) + " got a key")
                     players[key_player-1]["keys"] += 1
                 nbr_key = 0
                 for i in players:
                     nbr_key += i["keys"]
                 if nbr_key >= 3:
+                    history("Started final challenge")
                     final_challenge.final_challenge(players)
                 else:
                     ChallengeMenu()
             elif game == "riddles":
                 key_player = the_pere_fouras_challenge.pere_fouras_riddles(count)
                 if key_player != 0:
+                    history("Player " + str(key_player) + " got a key")
                     players[key_player-1]["keys"] += 1
                 nbr_key = 0
                 for i in players:
                     nbr_key += i["keys"]
                 if nbr_key >= 3:
+                    history("Started final challenge")
                     final_challenge.final_challenge(players)
                 else:
                     ChallengeMenu()

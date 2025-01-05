@@ -328,6 +328,7 @@ def chance_challenge(player):
         # Sets flags to exit both loops.
         if loop1:
             loop1 = False
+            history("Ended chance challenge")
             nuage_forward(win)
             
             
@@ -342,6 +343,7 @@ def chance_challenge(player):
 
         functions = [shell_game,roll_dice_game]
         challenge =  random.choice(functions)
+        history("Started challenge " + str(challenge.__name__))
 
         # Show appropriate messages and buttons based on the game result.
         title.hide = True

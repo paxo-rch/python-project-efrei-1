@@ -2,6 +2,13 @@
 # Author: Jules
 
 import graphics.objects as obj
+def history(text):
+    try:
+        with open("output/history.txt", "a") as f:
+            f.write(str(text)+"\n")
+    except:
+        with open("output/history.txt", "w") as f:
+            f.write(str(text)+"\n")
 
 def nuage_forward(w,c=None):
 

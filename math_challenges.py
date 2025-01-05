@@ -611,6 +611,7 @@ def math_challenge(player):
             # Sets flags to exit both loops.
             if loop1:
                 loop1 = False
+                history("Ended math challenge")
                 nuage_forward(win)
     # Assign the function to the exit button       
     exit.onclick = global_exit
@@ -621,6 +622,7 @@ def math_challenge(player):
         win.destroy(button)
         functions = [prime_challenge,factorial_challenge,equation_challenge]
         challenge =  random.choice(functions)
+        history("Started challenge " + str(challenge.__name__))
         # Show appropriate messages and buttons based on the game result.
         title.hide = True
         button.hide = True
