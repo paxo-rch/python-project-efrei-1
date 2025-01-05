@@ -4,6 +4,7 @@ import time
 from pygamevideo import Video
 import chance_challenges
 import math_challenges
+import logical_challenges
 from Utils import *
 
 
@@ -340,8 +341,15 @@ def ChallengeMenu():
             animation = False
             nuage_forward(w)
             PlayerChoice("math")
+    def logic_listener():
+        nonlocal animation
+        if animation:
+            animation = False
+            nuage_forward(w)
+            PlayerChoice("logical")
     math_button.onclick = math_listener
     chance_button.onclick = chance_listener
+    logic_button.onclick = logic_listener
     while True:
         w.updateAll()
 def PlayerChoice(game):
@@ -412,6 +420,11 @@ def PlayerChoice(game):
                 ChallengeMenu()
             elif game == "math":
                 key_player = math_challenges.math_challenge(counter)
+                if key_player != 0:
+                    players[key_player-1]["key"] += 1
+                ChallengeMenu()
+            elif game == "logical":
+                key_player = logical_challenges.nim_game(counter)
                 if key_player != 0:
                     players[key_player-1]["key"] += 1
                 ChallengeMenu()
