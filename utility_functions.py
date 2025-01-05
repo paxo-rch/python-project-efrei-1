@@ -95,7 +95,7 @@ def Introduction():
             PlayerCount()
     button_skip.onclick = button_listener
     nuage_backward(w)
-    text_intro = "Welcome to you young adventurers\nAre you looking for glory, power and wealth?\nYou are in the right place.\nHere you can get everything you want,\nbut for that you will have to succeed in the tests\nchosen by the master of the game\nGood luck!"
+    text_intro = "Welcome to you young adventurers\nAre you looking for glory, power and wealth?\nYou are in the right place.\nHere you can get everything you want,\nbut for that you will have to collect 3 keys in the tests\nchosen by the master of the game\nGood luck!"
     label_intro = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/2, 15, 15,"")
     w.add(label_intro)
 
