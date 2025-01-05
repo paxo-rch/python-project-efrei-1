@@ -35,6 +35,7 @@ class Object:
 
     mouse = False
     objectFocused = None
+    currentWindow = None
 
     keys = pygame.key.get_pressed()
     onkeyboard = None
@@ -129,6 +130,11 @@ class Object:
             return False
         
         if(self.parent is None):
+            if(Object.currentWindow != self):
+                Object.currentWindow = self
+                Object.objectFocused = None
+                Object.mouse = False
+
             self.renderAll()
 
             if(delay):  # limit the frame rate
@@ -177,6 +183,8 @@ class Object:
             if self.onendfocused is not None:
                 self.onendfocused()
             Object.objectFocused = None
+
+        return False
 
 # Widget box, it is a customizable box (color, radius and border)
 class Box(Object):
