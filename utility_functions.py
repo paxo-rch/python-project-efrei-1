@@ -18,10 +18,10 @@ def StartMenufunc():
     #set the window name
     pygame.display.set_caption('Fort Boyard Client v1.0')
     #set the window icon
-    programIcon = pygame.image.load('titrefort.png')
+    programIcon = pygame.image.load(titre_fort)
     pygame.display.set_icon(programIcon)
     w = obj.Win()
-    video = Video("genrique.mp4")
+    video = Video("resources/video/genrique.mp4")
     video.play(True)
     #hide the main window background
     w.hide_bg = True
@@ -30,7 +30,7 @@ def StartMenufunc():
     #hide the box
     text.transparent = True
     #load the image	
-    text.loadImage("parchemin_menu.png")
+    text.loadImage(parchemin_menu)
     #add the PRESS SPACE TO PLAY box to the window
     w.add(text)
     #create a box for the title
@@ -38,7 +38,7 @@ def StartMenufunc():
     #hide the box
     titlebox.transparent = True
     #load the image
-    titlebox.loadImage("titrefort.png")
+    titlebox.loadImage(titre_fort)
     w.add(titlebox)
     animation = True
     def KeyboardListener():
@@ -48,6 +48,7 @@ def StartMenufunc():
             nuage_forward(w,video)
             video.stop()
             video.release()
+            history("Started Game")
             Introduction()
     #set the keyboard listener
     obj.Object.onkeyboard = KeyboardListener
@@ -56,7 +57,7 @@ def StartMenufunc():
         video.draw_to(obj.gui, (0, 0))
         if time.time() % 1 > 0.5:
 
-            text.loadImage("parchemin_menu.png")
+            text.loadImage(parchemin_menu)
         else:
 
             text.unloadImage()
@@ -80,22 +81,23 @@ def Introduction():
     skip_text = obj.Label(0, 0, 200, 100, "Skip")
     button_skip.add(skip_text)
     w.add(button_skip)
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
 
     def button_listener():
 
         nonlocal Intro_Skiped, text_done
         if skip_text.text == "Skip":
-
+            history("Skipped Introduction")
             Intro_Skiped = True
         if text_done:
 
             text_done = False
+            history("Finished introduction")
             nuage_forward(w)
             PlayerCount()
     button_skip.onclick = button_listener
     nuage_backward(w)
-    text_intro = "Welcome to you young adventurers\nAre you looking for glory, power and wealth?\nYou are in the right place.\nHere you can get everything you want,\nbut for that you will have to succeed in the tests\nchosen by the master of the game\nGood luck!"
+    text_intro = "Welcome to you young adventurers\nAre you looking for glory, power and wealth?\nYou are in the right place.\nHere you can get everything you want,\nbut for that you will have to collect 3 keys in the tests\nchosen by the master of the game\nGood luck!"
     label_intro = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/2, 15, 15,"")
     w.add(label_intro)
 
@@ -120,7 +122,7 @@ def Introduction():
 def PlayerCount():
     global counter
     w = obj.Win()
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
     button_continuer = obj.Box(obj.WIN_WIDTH/1.3, obj.WIN_HEIGHT/1.25, 200, 100)
     button_continuer.borderWidth = 5
     button_continuer.radius = 10
@@ -178,6 +180,7 @@ def PlayerCount():
 
             continuer = False
             nuage_forward(w)
+            history("Selected " + str(counter) + " players")
             Compose_Equipe(counter)
 
     continuer = True
@@ -193,7 +196,7 @@ def Compose_Equipe(nbr):
     nbr_joueurs = nbr+1
     players = []
     w = obj.Win()
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
     texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/3, 15, 15,"Enter player 1 informations")
     w.add(texte)
     box_name = obj.Box(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/2, 600, 100)
@@ -273,6 +276,7 @@ def Compose_Equipe(nbr):
         nonlocal nbr, leader
         nbr -= 1
         players.append({"name":name_text.text,"profession":profession_text.text,"leader":leader,"keys":0})
+        history({"name":name_text.text,"profession":profession_text.text,"leader":leader,"keys":0})
         if nbr > 0:
             name_text.text = ""
             profession_text.text = ""
@@ -299,7 +303,7 @@ def Compose_Equipe(nbr):
     ChallengeMenu()
 def ChallengeMenu():
     w = obj.Win()
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
     texte = obj.Label(obj.WIN_WIDTH/2, obj.WIN_HEIGHT/4, 0, 0, "Choose the challenge")
     w.add(texte)
     math_button = obj.Box(obj.WIN_WIDTH/2.3, obj.WIN_HEIGHT/3, 200, 100)
@@ -339,24 +343,28 @@ def ChallengeMenu():
         if animation:
             animation = False
             nuage_forward(w)
+            history("Selected gambling challenge")
             PlayerChoice("luck")
     def math_listener():
         nonlocal animation
         if animation:
             animation = False
             nuage_forward(w)
+            history("Selected math challenge")
             PlayerChoice("math")
     def logic_listener():
         nonlocal animation
         if animation:
             animation = False
             nuage_forward(w)
+            history("Selected logic challenge")
             PlayerChoice("logical")
     def perefourras_listener():
         nonlocal animation
         if animation:
             animation = False
             nuage_forward(w)
+            history("Selected riddle challenge")
             PlayerChoice("riddles")
     math_button.onclick = math_listener
     chance_button.onclick = chance_listener
@@ -367,7 +375,7 @@ def ChallengeMenu():
 def PlayerChoice(game):
 
     w = obj.Win()
-    w.loadImage("parchemin.jpg")
+    w.loadImage(parchemin)
     button_continuer = obj.Box(obj.WIN_WIDTH/1.3, obj.WIN_HEIGHT/1.25, 200, 100)
     button_continuer.borderWidth = 5
     button_continuer.radius = 10
@@ -428,44 +436,52 @@ def PlayerChoice(game):
             if game == "luck":
                 key_player = chance_challenges.chance_challenge(count)
                 if key_player != 0:
+                    history("Player " + str(key_player) + " got a key")
                     players[key_player-1]["keys"] += 1
                 nbr_key = 0
                 for i in players:
                     nbr_key += i["keys"]
                 if nbr_key >= 3:
+                    history("Started final challenge")
                     final_challenge.final_challenge(players)
                 else:
                     ChallengeMenu()
             elif game == "math":
                 key_player = math_challenges.math_challenge(count)
                 if key_player != 0:
+                    history("Player " + str(key_player) + " got a key")
                     players[key_player-1]["keys"] += 1
                 nbr_key = 0
                 for i in players:
                     nbr_key += i["keys"]
                 if nbr_key >= 3:
+                    history("Started final challenge")
                     final_challenge.final_challenge(players)
                 else:
                     ChallengeMenu()
             elif game == "logical":
                 key_player = logical_challenges.nim_game(count)
                 if key_player != 0:
+                    history("Player " + str(key_player) + " got a key")
                     players[key_player-1]["keys"] += 1
                 nbr_key = 0
                 for i in players:
                     nbr_key += i["keys"]
                 if nbr_key >= 3:
+                    history("Started final challenge")
                     final_challenge.final_challenge(players)
                 else:
                     ChallengeMenu()
             elif game == "riddles":
                 key_player = the_pere_fouras_challenge.pere_fouras_riddles(count)
                 if key_player != 0:
+                    history("Player " + str(key_player) + " got a key")
                     players[key_player-1]["keys"] += 1
                 nbr_key = 0
                 for i in players:
                     nbr_key += i["keys"]
                 if nbr_key >= 3:
+                    history("Started final challenge")
                     final_challenge.final_challenge(players)
                 else:
                     ChallengeMenu()
@@ -476,4 +492,3 @@ def PlayerChoice(game):
     button_continuer.onclick = button_listener
     while True:
         w.updateAll()
-PlayerCount()

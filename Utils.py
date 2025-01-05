@@ -1,7 +1,22 @@
 # Mainly used to move the clouds (animation)
 # Author: Jules
-
+parchemin_menu = "resources/images/parchemin_menu.png"
+parchemin = "resources/images/parchemin.jpg"
+arrowimg = "resources/images/arrow.png"
+nuageimg = "resources/images/nuagenobg1.png"
+small_paper = "resources/images/small_paper.png"
+stickimg = "resources/images/stick.png"
+titre_fort = "resources/images/titrefort.png"
+img = "resources/images/img.png"
+cupimg = "resources/images/cup.png"
 import graphics.objects as obj
+def history(text):
+    try:
+        with open("output/history.txt", "a") as f:
+            f.write(str(text)+"\n")
+    except:
+        with open("output/history.txt", "w") as f:
+            f.write(str(text)+"\n")
 
 def nuage_forward(w,c=None):
 
@@ -21,7 +36,7 @@ def nuage_forward(w,c=None):
         #hiding the box
         nuage.transparent = True
         #loading the cloud image
-        nuage.loadImage("nuagenobg1.png")
+        nuage.loadImage(nuageimg)
         #adding the cloud to the main box
         sky_box.add(nuage)
         nuages.append(nuage)
@@ -30,7 +45,7 @@ def nuage_forward(w,c=None):
         #hiding the box
         nuage.transparent = True
         #loading the cloud image
-        nuage.loadImage("nuagenobg1.png")
+        nuage.loadImage(nuageimg)
         #adding the cloud to the main box
         sky_box.add(nuage)
         nuages1.append(nuage)
@@ -75,7 +90,7 @@ def nuage_backward(w):
         #hiding the box
         nuage.transparent = True
         #loading the cloud image
-        nuage.loadImage("nuagenobg1.png")
+        nuage.loadImage(nuageimg)
         #adding the cloud to the main box
         sky_box.add(nuage)
         nuages.append(nuage)
@@ -84,7 +99,7 @@ def nuage_backward(w):
         #hiding the box
         nuage.transparent = True
         #loading the cloud image
-        nuage.loadImage("nuagenobg1.png")
+        nuage.loadImage(nuageimg)
         #adding the cloud to the main box
         sky_box.add(nuage)
         nuages1.append(nuage)
