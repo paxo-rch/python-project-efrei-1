@@ -62,7 +62,7 @@ def final_challenge(players):
     w.add(button_submit)
     submit_text = obj.Label(0, 0, 200, 100, "Submit")
     button_submit.add(submit_text)
-    tvgame = load_riddles("TRClues.json")
+    tvgame = load_riddles("data/TRClues.json")
     year = random.choice(list(tvgame["Fort Boyard"].keys()))
     show = random.choice(list(tvgame["Fort Boyard"][year].keys()))
     clues = tvgame["Fort Boyard"][year][show]["Clues"]

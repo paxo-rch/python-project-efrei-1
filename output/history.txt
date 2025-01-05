@@ -1,0 +1,61 @@
+Started Game
+Skipped Introduction
+Finished introduction
+Selected 1 players
+{'name': 'jules', 'profession': 'student', 'leader': True, 'keys': 0}
+Selected logic challenge
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player 1 got a key
+Selected logic challenge
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player 1 got a key
+Selected logic challenge
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player 1 got a key
+Started final challenge
+Started Game
+Skipped Introduction
+Finished introduction
+Selected 1 players
