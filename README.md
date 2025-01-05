@@ -285,38 +285,31 @@ Here's a simplified overview of the functions, grouped by file. Details about pa
 
 Here are some screenshots showing the tests in action (you would replace these with actual screenshots from your game):
 
-**GUI Nim Game**
+**GUI Start Menu**
 
-![GUI Nim Game](resources/images/nim_game_gui.png)
+![GUI Start Menu](images_project/StartMenu.png)
 
-**GUI Tic Tac Toe**
 
-![GUI Tic Tac Toe](resources/images/tictactoe_gui.png)
+**GUI Introduction**
 
-**GUI Math Challenge**
+![GUI Introduction](images_project/Introduction.png)
 
-![GUI Math Challenge](resources/images/math_challenge_gui.png)
+**GUI Player Count**
 
-**GUI Chance Challenge**
+![GUI Player Count](images_project/playercount.png)
 
-![GUI Chance Challenge](resources/images/chance_challenge_gui.png)
+**GUI Player Info**
 
-**GUI Pere Fouras Challenge**
+![GUI Player Info](images_project/playerinfo.png)
 
-![GUI Pere Fouras Challenge](resources/images/riddle_challenge_gui.png)
+**GUI Challenge Menu**
 
-**GUI Final Challenge**
-
-![GUI Final Challenge](resources/images/final_challenge_gui.png)
-
-**Start Menu**
-
-![Start Menu](resources/images/start_menu.png)
+![GUI Challenge Menu](images_project/challengemenu.png)
 
 **Player Selection**
 
-![Player Selection](resources/images/player_selection.png)
+![Player Selection](images_project/chooseplayer.png)
 
-**Challenge Selection**
+**Game Won**
 
-![Challenge Selection](resources/images/challenge_selection.png)
+![Game Won](images_project/gamewon.png)

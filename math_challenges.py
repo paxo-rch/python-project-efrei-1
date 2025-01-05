@@ -338,8 +338,9 @@ def equation_challenge():
     print(c)
     print(int(solution_text.text)/int(solution_text1.text))
     # Verify if the answer is correct
-    if int(solution_text.text)/int(solution_text1.text) == c:
-        return True
+    if len(solution_text.text) > 0 and len(solution_text1.text) > 0:
+        if int(solution_text.text)/int(solution_text1.text) == c:
+            return True
     return False
 
 def Factorial(n):
@@ -427,8 +428,9 @@ def factorial_challenge():
     # Wait until the player does not continue
     while continuer:
         w.updateAll()
-    if int(factorial_text.text) == factorial:
-        return True
+    if len(factorial_text.text) > 0:
+        if int(factorial_text.text) == factorial:
+            return True
     return False
 
 def is_prime(n):
