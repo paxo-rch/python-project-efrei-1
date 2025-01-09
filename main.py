@@ -1,3 +1,4 @@
 import utility_functions
 #Start the game
-utility_functions.StartMenufunc()
+if __name__ == "__main__":
+    utility_functions.StartMenufunc()

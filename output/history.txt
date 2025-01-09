@@ -3,3 +3,155 @@ Started Game
 Skipped Introduction
 Finished introduction
 Selected 1 players
+Started Game
+Skipped Introduction
+Skipped Introduction
+Finished introduction
+Selected 1 players
+{'name': 'jules', 'profession': 'student', 'leader': False, 'keys': 0}
+Selected math challenge
+Started challenge factorial_challenge
+Submitted factorial
+Ended math challenge
+Player 1 got a key
+Selected math challenge
+Started challenge prime_challenge
+Submitted prime
+Ended math challenge
+Selected math challenge
+Started challenge prime_challenge
+Submitted prime
+Ended math challenge
+Player 1 got a key
+Selected math challenge
+Started challenge prime_challenge
+Submitted prime
+Ended math challenge
+Player 1 got a key
+Started final challenge
+Submitted code: 
+Submitted code: 
+Submitted code: 
+Submitted code: 
+Started Game
+Skipped Introduction
+Finished introduction
+Selected 1 players
+{'name': 'jules', 'profession': 'student', 'leader': True, 'keys': 0}
+Selected logic challenge
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Selected logic challenge
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player 1 got a key
+Selected gambling challenge
+Started challenge shell_game
+Selected cup 1
+Selected cup 0
+Ended chance challenge
+Selected gambling challenge
+Started challenge roll_dice_game
+Rolled the dice
+Rolled the dice
+Rolled the dice
+Ended chance challenge
+Player 1 got a key
+Selected math challenge
+Started challenge equation_challenge
+Submitted equation
+Ended math challenge
+Player 1 got a key
+Started final challenge
+Started Game
+Skipped Introduction
+Finished introduction
+Selected 1 players
+Started Game
+Skipped Introduction
+Finished introduction
+Selected 1 players
+{'name': 'arm', 'profession': 'jgggj', 'leader': True, 'keys': 0}
+Selected gambling challenge
+Started challenge shell_game
+Selected cup 1
+Selected cup 2
+Ended chance challenge
+Player 1 got a key
+Selected gambling challenge
+Started challenge roll_dice_game
+Rolled the dice
+Rolled the dice
+Rolled the dice
+Ended chance challenge
+Player 1 got a key
+Selected logic challenge
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Selected logic challenge
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player selected 1 stick
+Player selected 2 stick
+Player selected 3 stick
+Player 1 got a key
+Started final challenge
+Submitted code: coffee
+Submitted code: 
+Submitted code: slave
+Submitted code: slave
